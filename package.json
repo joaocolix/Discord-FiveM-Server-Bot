@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "start": "concurrently \"node .\""
+  },
+  "dependencies": {
+    "axios": "latest",
+    "better-sqlite3": "latest",
+    "canvas": "latest",
+    "colors": "latest",
+    "concurrently": "latest",
+    "dateformat": "latest",
+    "discord-html-transcripts": "latest",
+    "discord.js": "latest",
+    "express": "latest",
+    "gpix": "^1.1.3",
+    "moment": "latest",
+    "moment-timezone": "latest",
+    "ms": "latest",
+    "mysql": "latest",
+    "mysql2": "latest",
+    "node-cron": "latest",
+    "quick.db": "latest",
+    "sequelize": "latest"
+  }
+}
