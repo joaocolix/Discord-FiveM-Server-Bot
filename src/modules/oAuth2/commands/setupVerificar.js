@@ -1,8 +1,10 @@
 const Discord = require("discord.js")
+const cfg = require("../../../configs/client.json")
+const authUrl = `https://discord.com/api/oauth2/authorize?client_id=${cfg.client.id}&scope=identify%20email%20guilds.join&response_type=code&redirect_uri=${encodeURIComponent(cfg.client.redirect_uri)}&permissions=8`
 
 module.exports = {
-    name: "allowlist",
-    description: "[SETUP] Envia a mensagem de allowlist",
+    name: "auth-verificar",
+    description: "[SETUP] Envia a mensagem de verificar",
     type: Discord.ApplicationCommandType.ChatInput,
 
     run: async (client, interaction) => {
@@ -16,20 +18,18 @@ module.exports = {
                 new Discord.ActionRowBuilder()
                     .addComponents(
                         new Discord.ButtonBuilder()
-                            .setCustomId('start_allowlist')
-                            .setLabel('Allowlist')
-                            .setEmoji("<:all:1244631030237888572>")
-                            .setStyle(2),
+                        .setLabel('Verificar')
+                        .setStyle(Discord.ButtonStyle.Link)
+                        .setURL(authUrl)
                     )
                     .addComponents(
                         new Discord.ButtonBuilder()
-                            .setCustomId('start_code')
-                            .setLabel('Codiguin')
-                            .setEmoji("<:Designsemnome5:1271567340152164393>")
-                            .setStyle(3),
-                    ),
+                          .setCustomId('resp_verificar')
+                          .setLabel('Porque verificar')
+                          .setStyle(Discord.ButtonStyle.Primary)
+                    )
             ]
-        });
+        }); 
         interaction.reply({ content: `Feito! enviei no chat`, ephemeral: true });
 
     }

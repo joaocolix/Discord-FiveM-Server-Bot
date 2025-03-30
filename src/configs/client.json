@@ -3,7 +3,8 @@
       "id": "1163189542845685922",
       "secret": "FfLgzsjoa7NNxz57CaMucUPcmhs5OhCv",
       "token": "MTE2MzE4OTU0Mjg0NTY4NTkyMg.Gex24l.qOeOYFX4R-IeeSxrtUsJVtaOOEo1Tx3j1qKr2k",
-      "redirect_uri": "http://zoe.euphoriagg.com:80/oauth2/callback"
+      "redirect_uri": "http://localhost:80/oauth2/callback",
+      "guild_id": "1335799500194844692"
     }
   }
   

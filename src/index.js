@@ -10,7 +10,7 @@ const path = require('path');
 const app = express();
 
 const { checkLiveStatus } = require('./handler/api/twitch');
-const { handleOAuthCallback } = require('./handler/api/callback');
+const { handleOAuthCallback } = require('./modules/oAuth2/api/callback');
 
 const client = new Discord.Client({
     intents: [
@@ -26,11 +26,11 @@ module.exports = client;
 client.setMaxListeners(20);
 
 app.get('/error', (req, res) => {
-    res.sendFile(path.join(__dirname, 'handler/api/html/error.html'));
+    res.sendFile(path.join(__dirname, 'modules/oAuth2/web/error.html'));
 });
 
 app.get('/sucess', (req, res) => {
-    res.sendFile(path.join(__dirname, 'handler/api/html/sucess.html'));
+    res.sendFile(path.join(__dirname, 'modules/oAuth2/web/sucess.html'));
 });
 
 app.get('/oauth2/callback', handleOAuthCallback);
@@ -61,7 +61,7 @@ client.on("interactionCreate", async (interaction) => {
         await command.run(client, interaction);
     } catch (error) {
         console.error(`Erro ao executar o comando ${interaction.commandName}:`, error);
-        await interaction.reply({ content: "❌ Ocorreu um erro ao executar o comando.", ephemeral: true });
+        await interaction.reply({ content: "Ocorreu um erro ao executar o comando.", ephemeral: true });
     }
 });
 
@@ -69,19 +69,4 @@ client.on("interactionCreate", async (interaction) => {
 client.slashCommands = new Discord.Collection();
 require('./handler/slash')(client);
 require('./handler/events')(client);
-// require('./handler/error')(client);
 client.login(cfg.client.token);
-
-// const eventTicketPath = path.join(__dirname, 'eventTicket');
-
-// fs.readdirSync(eventTicketPath).forEach(file => {
-//     if (file.endsWith('.js')) { 
-//         const event = require(`./eventTicket/${file}`);
-//         if (event.execute && typeof event.execute === 'function') {
-//             client.on('interactionCreate', event.execute);
-
-//             const eventName = path.basename(file, path.extname(file));
-//             console.log(`[CARREGADO] Ticket: ${eventName}`.green);
-//         }
-//     }
-// });
