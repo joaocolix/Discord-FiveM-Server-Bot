@@ -9,7 +9,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const { checkLiveStatus } = require('./handler/api/twitch');
+const { checkLiveStatus } = require('./modules/streamMonitor/api/oauth2');
 const { handleOAuthCallback } = require('./modules/oAuth2/api/callback');
 
 const client = new Discord.Client({
@@ -25,20 +25,12 @@ module.exports = client;
 
 client.setMaxListeners(20);
 
-app.get('/error', (req, res) => {
-    res.sendFile(path.join(__dirname, 'modules/oAuth2/web/error.html'));
-});
-
-app.get('/sucess', (req, res) => {
-    res.sendFile(path.join(__dirname, 'modules/oAuth2/web/sucess.html'));
-});
-
 app.get('/oauth2/callback', handleOAuthCallback);
 
 app.use('/ticket', express.static(path.join(__dirname, 'ticket')));
 
 app.get('/invite', (req, res) => {
-    const clientId = '1163189542845685922'; // Substitua pelo ID do seu bot
+    const clientId = '1163189542845685922';
     const inviteUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&scope=bot&permissions=8`;
     res.redirect(inviteUrl);
 });

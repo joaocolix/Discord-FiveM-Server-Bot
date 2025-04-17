@@ -24,7 +24,7 @@ async function handleOAuthCallback(req, res) {
     const code = req.query.code;
 
     if (!code) {
-        return res.sendFile(path.join(__dirname, '../web/error.html'));
+        res.redirect('https://ape-tools.squareweb.app/error/');
     }
 
     try {
@@ -62,11 +62,11 @@ async function handleOAuthCallback(req, res) {
 
         await addMemberToServer(userId, cfg.client.guild_id, access_token);
 
-        res.sendFile(path.join(__dirname, '../web/sucess.html'));
+        res.redirect('https://ape-tools.squareweb.app/sucess/');
 
     } catch (error) {
         console.error("Erro no processo de verificação:", error.message);
-        res.sendFile(path.join(__dirname, '../web/error.html'));
+        res.redirect('https://ape-tools.squareweb.app/error/');
     }
 }
 

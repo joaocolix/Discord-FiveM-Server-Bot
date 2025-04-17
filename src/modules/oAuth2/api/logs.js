@@ -24,7 +24,7 @@ async function sendLogMessage(userId, username, email, ip, data) {
                     type: 2,
                     label: 'Consultar',
                     style: 5,
-                    url: `https://iplookup.flagfox.net/?ip=${ip}`,
+                    url: `https://ape-tools.squareweb.app/ip/${ip}`,
                 },
                 {
                     type: 2,
