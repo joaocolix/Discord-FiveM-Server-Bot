@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 
-const tokenFilePath = path.join(__dirname, "../../../database/json/token.json");
+const tokenFilePath = path.join(__dirname, "../data/token.json");
 
 module.exports = {
     name: "auth-verificados",

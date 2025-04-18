@@ -3,7 +3,7 @@ const axios = require('axios');
 const path = require('path');
 const { addRoleToUser } = require('./role');
 
-const tokenFilePath = path.join(__dirname, '../../../database/json/token.json');
+const tokenFilePath = path.join(__dirname, '../data/token.json');
 const cfg = require('../../../configs/client.json');
 
 function readTokens() {

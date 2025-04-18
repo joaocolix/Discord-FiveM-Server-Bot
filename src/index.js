@@ -9,7 +9,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-const { checkLiveStatus } = require('./modules/streamMonitor/api/oauth2');
+const { checkLiveStatus } = require('./modules/live-monitor/api/oauth2');
 const { handleOAuthCallback } = require('./modules/oAuth2/api/callback');
 
 const client = new Discord.Client({

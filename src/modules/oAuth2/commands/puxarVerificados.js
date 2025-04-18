@@ -4,7 +4,7 @@ const path = require("path");
 const axios = require("axios");
 const { getAccessToken, addMemberToServer } = require("../api/oauth2");
 
-const tokenFilePath = path.join(__dirname, "../../../database/json/token.json");
+const tokenFilePath = path.join(__dirname, "../data/token.json");
 
 module.exports = {
     name: "auth-redirecionar",
@@ -14,6 +14,12 @@ module.exports = {
         {
             name: "servidor_id",
             description: "ID do servidor (opcional, se não informado, será o servidor atual).",
+            type: Discord.ApplicationCommandOptionType.String,
+            required: false
+        },
+        {
+            name: "usuario_id",
+            description: "ID do usuário para readicionar (opcional, se não informado, serão todos).",
             type: Discord.ApplicationCommandOptionType.String,
             required: false
         }
@@ -28,6 +34,7 @@ module.exports = {
         }
 
         const serverId = interaction.options.getString("servidor_id") || interaction.guild.id;
+        const userIdInput = interaction.options.getString("usuario_id");
 
         if (!fs.existsSync(tokenFilePath)) {
             return interaction.reply({ content: "Nenhum usuário verificado encontrado.", ephemeral: true });
@@ -41,12 +48,26 @@ module.exports = {
             return interaction.reply({ content: "Nenhum usuário verificado encontrado.", ephemeral: true });
         }
 
+        let toProcess = users;
+
+        if (userIdInput) {
+            if (!tokens[userIdInput]) {
+                return interaction.reply({ content: `O usuário com ID \`${userIdInput}\` não está verificado.`, ephemeral: true });
+            }
+            toProcess = [userIdInput];
+        }
+
+        await interaction.reply({
+            content: userIdInput
+                ? `Tentando readicionar o usuário com ID \`${userIdInput}\` ao servidor **${serverId}**...`
+                : `Tentando adicionar **${users.length}** usuários ao servidor **${serverId}**...`,
+            ephemeral: true
+        });
+
         let addedCount = 0;
         let failedCount = 0;
 
-        await interaction.reply({ content: `Tentando adicionar **${users.length}** usuários ao servidor **${serverId}**...`, ephemeral: true });
-
-        for (const userId of users) {
+        for (const userId of toProcess) {
             try {
                 const accessToken = await getAccessToken(userId);
                 if (!accessToken) {
@@ -64,7 +85,9 @@ module.exports = {
         }
 
         interaction.followUp({
-            content: `**${addedCount}** usuários foram adicionados ao servidor **${serverId}**.\n**${failedCount}** usuários falharam ao ser adicionados.`,
+            content: userIdInput
+                ? `Usuário com ID \`${userIdInput}\` ${addedCount ? "foi readicionado com sucesso" : "falhou ao ser readicionado"} ao servidor **${serverId}**.`
+                : `**${addedCount}** usuários foram adicionados ao servidor **${serverId}**.\n**${failedCount}** usuários falharam ao ser adicionados.`,
             ephemeral: false
         });
     }
