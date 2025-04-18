@@ -80,7 +80,7 @@ client.on('interactionCreate', async (interaction) => {
 const fs = require('fs');
 const path = require('path');
 
-const vendasPath = path.resolve(__dirname, '../vendas.json');
+const vendasPath = path.resolve(__dirname, '../data/vendas.json');
 
 async function salvarVenda(dados) {
     try {

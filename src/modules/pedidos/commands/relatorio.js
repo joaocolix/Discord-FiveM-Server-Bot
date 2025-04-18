@@ -30,7 +30,7 @@ module.exports = {
 
         const dias = interaction.options.getInteger('dias');
         const usuario = interaction.options.getUser('usuario');
-        const vendasPath = path.resolve(__dirname, '../vendas.json');
+        const vendasPath = path.resolve(__dirname, '../data/vendas.json');
 
         if (!fs.existsSync(vendasPath)) {
             return interaction.reply({ content: 'Nenhuma venda registrada ainda.', ephemeral: true });
