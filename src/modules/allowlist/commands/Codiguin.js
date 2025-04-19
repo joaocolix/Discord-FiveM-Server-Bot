@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const { EmbedBuilder, ApplicationCommandType, ApplicationCommandOptionType, PermissionFlagsBits } = require('discord.js');
-const codesFilePath = path.resolve(__dirname, '../../../database/json/codes.json');
+const codesFilePath = path.resolve(__dirname, '../database/json/codes.json');
 
 module.exports = {
     name: "gerar-codiguin",

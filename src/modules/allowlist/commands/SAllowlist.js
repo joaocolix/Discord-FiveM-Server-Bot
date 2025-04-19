@@ -18,14 +18,12 @@ module.exports = {
                         new Discord.ButtonBuilder()
                             .setCustomId('start_allowlist')
                             .setLabel('Allowlist')
-                            .setEmoji("<:all:1244631030237888572>")
                             .setStyle(2),
                     )
                     .addComponents(
                         new Discord.ButtonBuilder()
                             .setCustomId('start_code')
                             .setLabel('Codiguin')
-                            .setEmoji("<:Designsemnome5:1271567340152164393>")
                             .setStyle(3),
                     ),
             ]

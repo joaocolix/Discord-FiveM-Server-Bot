@@ -19,14 +19,12 @@ module.exports = {
                         new Discord.ButtonBuilder()
                         .setCustomId('botao_liberar')
                         .setLabel('Liberar')
-                        .setEmoji("<:emoji_34:1185974987954335904>")
                         .setStyle('3')
                       )
                     .addComponents(
                         new Discord.ButtonBuilder()
                         .setCustomId('botao_resetar')
                         .setLabel('Resetar')
-                        .setEmoji("<:reset:1283414301213720587>")
                         .setStyle('2')
                     )
             ]

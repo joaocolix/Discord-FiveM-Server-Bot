@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = require('../../../index');
-const database = require('../../../database/database');
+const database = require('../database/database');
 const config = require('../../../configs/database.json');
 const moment = require('moment-timezone');
 
