@@ -6,7 +6,7 @@ const votos = new Map();
 client.on('messageCreate', async (message) => {
     if (message.author.bot) return;
 
-    const sugestaoChannelId = "1362604062079582370";
+    const sugestaoChannelId = "1362456320606998558";
 
     if (message.channel.id !== sugestaoChannelId) return;
 

@@ -2,7 +2,7 @@ const client = require('../../../index');
 const Discord = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const codesFilePath = path.resolve(__dirname, '../database/json/codes.json');
+const codesFilePath = path.resolve(__dirname, '../../../database/json/codes.json');
 
 client.on("interactionCreate", async (interaction) => {
     if (interaction.isButton()) {
@@ -23,6 +23,7 @@ client.on("interactionCreate", async (interaction) => {
             modalCode.addComponents(
                 new Discord.ActionRowBuilder().addComponents(codeInput)
             );
+
             await interaction.showModal(modalCode);
         }
     }

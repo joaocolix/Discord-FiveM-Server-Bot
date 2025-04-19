@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const client = require('../../../index');
-const database = require('../database/database');
+const database = require('../../../database/database');
 const config = require('../../../configs/database.json');
 const moment = require('moment-timezone');
 
@@ -87,9 +87,9 @@ client.on("interactionCreate", async (interaction) => {
 
                 await encontrar_id.save();
 
-                await interaction.member.roles.add("1280244504825298981"); // cidadao
-                await interaction.member.roles.remove("1140886455439343648"); // visitante
-                await interaction.member.roles.remove("1271576799012458526"); // liberar id
+                await interaction.member.roles.add("1280244504825298981");
+                await interaction.member.roles.remove("1140886455439343648");
+                await interaction.member.roles.remove("1271576799012458526");
                 await client.guilds.cache.get(interaction.guild.id).channels.cache.get(config.canallogwl).send({ embeds: [embed] });
 
                 return await interaction.reply({ content: 'Eba! Agora é só entrar em nossa cidade, estou te esperando!', ephemeral: true });
