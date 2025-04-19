@@ -17,7 +17,7 @@ const client = new Discord.Client({
 });
 module.exports = client;
 
-client.setMaxListeners(20);
+client.setMaxListeners(100);
 
 client.slashCommands = new Discord.Collection();
 require('./handler/slashCommands')(client);

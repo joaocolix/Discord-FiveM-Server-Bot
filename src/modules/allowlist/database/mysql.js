@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize");
-const config = require('../../../../configs/database.json')
+const config = require('../../../configs/database.json')
 
 var db = config.database
 var user = config.user

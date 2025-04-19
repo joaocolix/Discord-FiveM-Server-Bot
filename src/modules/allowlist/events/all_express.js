@@ -9,11 +9,11 @@ client.on("interactionCreate", async (interaction) => {
         if (interaction.customId === "start_code") {
             const modalCode = new Discord.ModalBuilder()
                 .setCustomId("modalCode")
-                .setTitle("CODIGUIN EUPHORIA");
+                .setTitle("Allowlist Express");
 
             const codeInput = new Discord.TextInputBuilder()
                 .setCustomId("codeInput")
-                .setLabel("Insira o seu codiguin abaixo.")
+                .setLabel("Insira o seu token abaixo.")
                 .setMaxLength(50)
                 .setMinLength(5)
                 .setPlaceholder("1234")
@@ -40,7 +40,7 @@ client.on("interactionCreate", async (interaction) => {
 
             if (codesData[code]) {
                 if (codesData[code].usedBy) {
-                    return interaction.reply({ content: `Esse codiguin já foi utilizado.`, ephemeral: true });
+                    return interaction.reply({ content: `Esse token já foi utilizado.`, ephemeral: true });
                 } else {
                     codesData[code].usedBy = interaction.user.id;
                     try {

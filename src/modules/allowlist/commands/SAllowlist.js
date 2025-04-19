@@ -17,13 +17,13 @@ module.exports = {
                     .addComponents(
                         new Discord.ButtonBuilder()
                             .setCustomId('start_allowlist')
-                            .setLabel('Allowlist')
+                            .setLabel('Formulário')
                             .setStyle(2),
                     )
                     .addComponents(
                         new Discord.ButtonBuilder()
                             .setCustomId('start_code')
-                            .setLabel('Codiguin')
+                            .setLabel('Express')
                             .setStyle(3),
                     ),
             ]
