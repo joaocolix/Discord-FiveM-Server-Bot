@@ -1,0 +1,12 @@
+{
+    "Server": {
+        "serverIp": "189.127.164.166",
+        "serverPort": "30120",
+        "serverConnect": "connect jogar.apestudio.dev",
+        "status": "online",
+        "statusMessageId": "1363613934988431380",
+        "statusChannelId": "1362989902089818122",
+        "updateInterval": 1,
+        "buttons": []
+    }
+}

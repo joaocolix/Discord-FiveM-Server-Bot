@@ -35,7 +35,7 @@ client.on('interactionCreate', async (interaction) => {
             if (pedidoMsg) {
                 const embed = Discord.EmbedBuilder.from(pedidoMsg.embeds[0]);
                 embed.setColor('#00ff00');
-                embed.setDescription(`${embed.data.description}\n\n✅ **Status:** Pagamento Confirmado`);
+                embed.setDescription(`${embed.data.description}\n\n**Status:** Pagamento Confirmado`);
 
                 const disabledComponents = pedidoMsg.components.map(row => {
                     const newRow = Discord.ActionRowBuilder.from(row);
@@ -68,7 +68,7 @@ client.on('interactionCreate', async (interaction) => {
         if (logMessage) {
             const embed = Discord.EmbedBuilder.from(logMessage.embeds[0]);
             embed.setColor('#ff3333');
-            embed.setDescription(`${embed.data.description}\n\n❌ **Status:** Pagamento Cancelado`);
+            embed.setDescription(`${embed.data.description}\n\n**Status:** Pagamento Cancelado`);
 
             await logMessage.edit({ embeds: [embed] });
         }
