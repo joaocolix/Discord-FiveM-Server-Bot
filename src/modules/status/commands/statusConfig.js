@@ -10,10 +10,10 @@ module.exports = {
             { label: 'IP', value: 'serverIp' },
             { label: 'Porta', value: 'serverPort' },
             { label: 'Connect', value: 'serverConnect' },
-            { label: 'Modo Manutenção', value: 'setManutencao' },
-            { label: 'Enviar Status', value: 'enviarEmbed' },
             { label: 'Intervalo de atualização', value: 'updateInterval' },
-            { label: 'Editar Botões do Embed', value: 'editButtons' }
+            { label: 'Editar Botões do Embed', value: 'editButtons' },
+            { label: 'Modo Manutenção', value: 'setManutencao' },
+            { label: 'Enviar Status', value: 'enviarEmbed' }
         ];
 
         const selectMenu = new Discord.StringSelectMenuBuilder()
