@@ -13,7 +13,7 @@ module.exports = {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) {
             return interaction.reply({
                 content: `Você não possui permissão para utilizar este comando.`,
-                ephemeral: true,
+                flags: 1 << 6,
             });
         }
 
@@ -27,7 +27,7 @@ module.exports = {
             }
         } catch (error) {
             console.error("Erro ao ler os tokens:", error);
-            return interaction.reply({ content: "Erro ao obter o número de usuários verificados.", ephemeral: true });
+            return interaction.reply({ content: "Erro ao obter o número de usuários verificados.", flags: 1 << 6 });
         }
 
         await interaction.reply({ content: `Atualmente, **${verifiedCount}** usuários já se verificaram.`, ephemeral: false });

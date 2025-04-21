@@ -13,6 +13,6 @@ client.on('interactionCreate', async (interaction) => {
                 { name: 'Transferir', value: '`/comando`', inline: false },
             )
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: 1 << 6 });
     }
 });

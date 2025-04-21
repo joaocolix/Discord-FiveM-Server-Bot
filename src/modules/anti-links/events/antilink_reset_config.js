@@ -36,7 +36,7 @@ client.on("interactionCreate", async (interaction) => {
         await interaction.reply({
             content: "Tem certeza que deseja **resetar todas as configurações** deste servidor?",
             components: [row],
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 

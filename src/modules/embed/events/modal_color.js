@@ -11,7 +11,7 @@ client.on('interactionCreate', async (interaction) => {
         if (!isHex.test(corHex)) {
             return interaction.reply({
                 content: "Cor inválida. Use o formato HEX (ex: `#5865F2`).",
-                ephemeral: true
+                flags: 1 << 6
             });
         }
     

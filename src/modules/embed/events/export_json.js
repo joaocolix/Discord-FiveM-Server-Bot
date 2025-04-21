@@ -10,7 +10,7 @@ client.on('interactionCreate', async (interaction) => {
         const embeds = userEmbeds.get(userId);
         if (!embeds || !embeds[index]) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Embed não encontrada para exportar."
             });
         }
@@ -19,7 +19,7 @@ client.on('interactionCreate', async (interaction) => {
         const jsonExport = JSON.stringify(embed.toJSON(), null, 2);
     
         await interaction.reply({
-            ephemeral: true,
+            flags: 1 << 6,
             content: `**JSON da Embed ${index + 1}:**\n\`\`\`json\n${jsonExport}\n\`\`\``
         });
     }    

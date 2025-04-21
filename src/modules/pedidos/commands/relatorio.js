@@ -25,7 +25,7 @@ module.exports = {
 
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, ephemeral: true });
+            return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6 });
         }
 
         const dias = interaction.options.getInteger('dias');
@@ -33,7 +33,7 @@ module.exports = {
         const vendasPath = path.resolve(__dirname, '../data/vendas.json');
 
         if (!fs.existsSync(vendasPath)) {
-            return interaction.reply({ content: 'Nenhuma venda registrada ainda.', ephemeral: true });
+            return interaction.reply({ content: 'Nenhuma venda registrada ainda.', flags: 1 << 6 });
         }
 
         const vendas = JSON.parse(fs.readFileSync(vendasPath));
@@ -50,7 +50,7 @@ module.exports = {
                 content: usuario
                     ? `Nenhuma venda registrada para ${usuario} nos últimos ${dias} dias.`
                     : `Nenhuma venda registrada nos últimos ${dias} dias.`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 

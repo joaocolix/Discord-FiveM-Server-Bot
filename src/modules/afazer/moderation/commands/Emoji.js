@@ -43,10 +43,10 @@ module.exports = {
             case "add": {
 
                 if (!interaction.guild.members.me.permissions.has(PermissionFlagsBits.ManageEmojisAndStickers)) {
-                    return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, ephemeral: true  })
+                    return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6  })
                 }
                 if (!interaction.channel.permissionsFor(interaction.user).has(PermissionFlagsBits.ManageEmojisAndStickers)) {
-                    return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, ephemeral: true  })
+                    return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6  })
                 }
                 
                 let name = interaction.options.getString("name");
@@ -68,7 +68,7 @@ module.exports = {
                         console.log(error)
                         return interaction.reply({
                             content: "Não foi possível adicionar emoji, verifique se você atingiu o limite de emojis no servidor\n> Lembre-se, você só pode adicionar emojis personalizados",
-                            ephemeral: true,
+                            flags: 1 << 6,
                         });
                     });
 
@@ -86,7 +86,7 @@ module.exports = {
 
                     return interaction.reply({
                         embeds: [embed1],
-                        ephemeral: true,
+                        flags: 1 << 6,
                     });
                 }
 

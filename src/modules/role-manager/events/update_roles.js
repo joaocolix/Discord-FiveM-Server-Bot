@@ -27,7 +27,7 @@ client.on("interactionCreate", async (interaction) => {
         return interaction.update({
             content: "Não foi possível encontrar os dados deste usuário.",
             components: [],
-            ephemeral: true,
+            flags: 1 << 6,
         });
     }
 
@@ -61,7 +61,7 @@ client.on("interactionCreate", async (interaction) => {
             return interaction.update({
                 content: `Cargos atualizados e aplicados para o usuário <@${userId}>.`,
                 components: [],
-                ephemeral: true,
+                flags: 1 << 6,
             });
 
         } catch (error) {
@@ -69,14 +69,14 @@ client.on("interactionCreate", async (interaction) => {
             return interaction.update({
                 content: `Cargos salvos, mas houve erro ao aplicar para <@${userId}>.`,
                 components: [],
-                ephemeral: true,
+                flags: 1 << 6,
             });
         }
     } else {
         return interaction.update({
             content: `Cargos salvos para <@${userId}> (usuário fora do servidor).`,
             components: [],
-            ephemeral: true,
+            flags: 1 << 6,
         });
     }
 });

@@ -23,14 +23,14 @@ client.on("interactionCreate", async (interaction) => {
         const configPath = path.join(__dirname, "../data/antiLinkChannels.json");
     
         if (!fs.existsSync(backupPath)) {
-            return interaction.reply({ content: "Nenhum backup encontrado.", ephemeral: true });
+            return interaction.reply({ content: "Nenhum backup encontrado.", flags: 1 << 6 });
         }
     
         const backups = JSON.parse(fs.readFileSync(backupPath));
         const backupData = backups[guildId];
     
         if (!backupData) {
-            return interaction.reply({ content: "Nenhum backup salvo para este servidor.", ephemeral: true });
+            return interaction.reply({ content: "Nenhum backup salvo para este servidor.", flags: 1 << 6 });
         }
     
         const configData = fs.existsSync(configPath) ? JSON.parse(fs.readFileSync(configPath)) : {};
@@ -48,7 +48,7 @@ client.on("interactionCreate", async (interaction) => {
     
         await interaction.reply({
             content: `Backup restaurado com sucesso! Último backup salvo em: \`${dataFormatada}\``,
-            ephemeral: true
+            flags: 1 << 6
         });
     
         await sendLog(interaction.guild, {

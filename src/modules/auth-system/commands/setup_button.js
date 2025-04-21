@@ -8,7 +8,7 @@ module.exports = {
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({
             content: `Você não possui permissão para utilizar este comando.`,
-            ephemeral: true,
+            flags: 1 << 6,
         })
 
         await interaction.channel.send({
@@ -28,7 +28,7 @@ module.exports = {
                     )
             ]
         }); 
-        interaction.reply({ content: `Feito! enviei no chat`, ephemeral: true });
+        interaction.reply({ content: `Feito! enviei no chat`, flags: 1 << 6 });
 
     }
 }

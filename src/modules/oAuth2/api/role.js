@@ -1,5 +1,5 @@
 const axios = require("axios");
-const cfg = require("../../../configs/client.json");
+require("dotenv").config();
 
 const ROLE_ID = "1348399288849272953";
 
@@ -10,7 +10,7 @@ async function addRoleToUser(guildId, userId) {
             {},
             {
                 headers: {
-                    Authorization: `Bot ${cfg.client.token}`,
+                    Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
                 },
             }
         );

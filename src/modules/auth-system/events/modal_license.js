@@ -35,7 +35,7 @@ client.on('interactionCreate', async (interaction) => {
         if (jaExiste) {
             return await interaction.reply({
                 content: `Este usuário já possui o script **${scriptName}** no servidor **${serverName}**.`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
@@ -51,7 +51,7 @@ client.on('interactionCreate', async (interaction) => {
 
         await interaction.reply({
             content: `Licença adicionada para <@${userId}> no servidor **${serverName}**.`,
-            ephemeral: true
+            flags: 1 << 6
         });
     }
     if (interaction.isModalSubmit() && interaction.customId.startsWith('modal_remove_license_')) {
@@ -79,7 +79,7 @@ client.on('interactionCreate', async (interaction) => {
             ? `Licença **${script}** no servidor **${servidor}** não encontrada para <@${userId}>.`
             : `Licença **${script}** removida de <@${userId}> no servidor **${servidor}**.\n📝 Motivo: ${reason}`;
     
-        await interaction.reply({ content: reply, ephemeral: true });
+        await interaction.reply({ content: reply, flags: 1 << 6 });
     }
     
     if (interaction.isModalSubmit() && interaction.customId.startsWith('modal_gerenciar_')) {
@@ -102,7 +102,7 @@ client.on('interactionCreate', async (interaction) => {
         );
 
         if (!licenca) {
-            return await interaction.reply({ content: 'Licença não encontrada.', ephemeral: true });
+            return await interaction.reply({ content: 'Licença não encontrada.', flags: 1 << 6 });
         }
 
         licenca[campo] = novoValor;
@@ -111,7 +111,7 @@ client.on('interactionCreate', async (interaction) => {
 
         await interaction.reply({
             content: `O campo **${campo}** da licença foi atualizado com sucesso.`,
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 });

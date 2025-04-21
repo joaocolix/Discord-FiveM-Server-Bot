@@ -13,7 +13,7 @@ client.on('interactionCreate', async (interaction) => {
     
         if (!embeds || embeds.length === 0) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Nenhuma embed foi criada para enviar."
             });
         }
@@ -32,13 +32,13 @@ client.on('interactionCreate', async (interaction) => {
             if (!res.ok) throw new Error(`Erro HTTP ${res.status}`);
     
             await interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Embeds enviadas com sucesso via Webhook!"
             });
         } catch (err) {
             console.error("[Webhook Error]", err);
             await interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Ocorreu um erro ao enviar via webhook. Verifique a URL e tente novamente."
             });
         }

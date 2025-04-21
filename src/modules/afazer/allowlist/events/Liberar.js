@@ -1,14 +1,14 @@
 const Discord = require('discord.js');
 const client = require('../../../index');
 const database = require('../database/database');
-const config = require('../../../configs/database.json');
+const config = require('../data/database.json');
 const moment = require('moment-timezone');
 
 client.on("interactionCreate", async (interaction) => {
     if (interaction.isButton()) {
         if (interaction.customId === "botao_liberar") {
             if (!interaction.guild.channels.cache.get(config.canallogwl)) {
-                return interaction.reply({ content: `Opa! parece que o sistema está desativado.`, ephemeral: true });
+                return interaction.reply({ content: `Opa! parece que o sistema está desativado.`, flags: 1 << 6 });
             }
 
             const modal = new Discord.ModalBuilder()
@@ -41,11 +41,11 @@ client.on("interactionCreate", async (interaction) => {
                         database_base.whitelist = 0;
                         database_base.discord = '';
                         await database_base.save();
-                        return await interaction.reply({ content: 'ID Resetado!', ephemeral: true });
+                        return await interaction.reply({ content: 'ID Resetado!', flags: 1 << 6 });
                     }, 1000);
                 }
             } else {
-                await interaction.reply({ content: 'Opa! Não consegui encontrar nenhuma conta vinculada ao seu discord.', ephemeral: true });
+                await interaction.reply({ content: 'Opa! Não consegui encontrar nenhuma conta vinculada ao seu discord.', flags: 1 << 6 });
             }
         }
     } else if (interaction.isModalSubmit()) {
@@ -55,20 +55,20 @@ client.on("interactionCreate", async (interaction) => {
             const encontrar_id = await database.whitelist.findOne({ where: { id: valueIdd } });
 
             if (!encontrar_id) {
-                return await interaction.reply({ content: 'Opa! Não consegui encontrar esse token... Tem certeza de que é esse mesmo?', ephemeral: true });
+                return await interaction.reply({ content: 'Opa! Não consegui encontrar esse token... Tem certeza de que é esse mesmo?', flags: 1 << 6 });
             }
 
             if (encontrar_id.whitelist === 1) {
                 return await interaction.reply({
                     content: `Opa! Parece que esse token já foi liberado por <@${encontrar_id.discord}>`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
             if (encontrar_id.discord != 0) {
                 return await interaction.reply({
                     content: `Opa! Parece que esse token já está vinculado por <@${encontrar_id.discord}>`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
@@ -92,7 +92,7 @@ client.on("interactionCreate", async (interaction) => {
                 await interaction.member.roles.remove("1271576799012458526");
                 await client.guilds.cache.get(interaction.guild.id).channels.cache.get(config.canallogwl).send({ embeds: [embed] });
 
-                return await interaction.reply({ content: 'Eba! Agora é só entrar em nossa cidade, estou te esperando!', ephemeral: true });
+                return await interaction.reply({ content: 'Eba! Agora é só entrar em nossa cidade, estou te esperando!', flags: 1 << 6 });
             }, 1000);
         }
     }

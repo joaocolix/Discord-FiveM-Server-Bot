@@ -24,7 +24,7 @@ client.on('interactionCreate', async (interaction) => {
         );
 
         if (!licenca) {
-            return await interaction.reply({ content: 'Licença não encontrada.', ephemeral: true });
+            return await interaction.reply({ content: 'Licença não encontrada.', flags: 1 << 6 });
         }
 
         licenca[campo] = novoValor;
@@ -33,7 +33,7 @@ client.on('interactionCreate', async (interaction) => {
 
         return await interaction.reply({
             content: `O campo **${campo}** da licença foi atualizado com sucesso para **${novoValor}**.`,
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 });

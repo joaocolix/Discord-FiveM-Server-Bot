@@ -23,11 +23,11 @@ module.exports = {
     })
     .then(() => {
       interaction.channel.sendTyping();
-      interaction.reply({ content: `Feito!`, ephemeral: true });
+      interaction.reply({ content: `Feito!`, flags: 1 << 6 });
       interaction.channel.send({ content: `<:saiu:1243918812936540302> ${usuario} foi removido.`});
     })
     .catch(error => {
-      interaction.reply({ content: "Houve um erro ao remover o acesso. Por favor, tente novamente.", ephemeral: true });
+      interaction.reply({ content: "Houve um erro ao remover o acesso. Por favor, tente novamente.", flags: 1 << 6 });
     });
   }
 };

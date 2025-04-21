@@ -2,7 +2,7 @@ const axios = require('axios');
 const path = require('path');
 const { storeAccessToken, addMemberToServer } = require('./oauth2');
 const { sendLogMessage } = require('./logs');
-const cfg = require('../../../configs/client.json');
+require('dotenv').config(); // importante garantir isso aqui
 
 async function getUserIp(req) {
     let ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
@@ -24,16 +24,16 @@ async function handleOAuthCallback(req, res) {
     const code = req.query.code;
 
     if (!code) {
-        res.redirect('https://ape-tools.squareweb.app/error/');
+        return res.redirect('https://ape-tools.squareweb.app/error/');
     }
 
     try {
         const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
-            client_id: cfg.client.id,
-            client_secret: cfg.client.secret,
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET,
             grant_type: 'authorization_code',
             code: code,
-            redirect_uri: cfg.client.redirect_uri,
+            redirect_uri: process.env.REDIRECT_URI,
             scope: 'identify email guilds.join',
         }), {
             headers: {
@@ -51,7 +51,7 @@ async function handleOAuthCallback(req, res) {
 
         const userId = userResponse.data.id;
         const username = userResponse.data.username;
-        const email = userResponse.data.email || "Não disponível"; 
+        const email = userResponse.data.email || "Não disponível";
 
         const ip = await getUserIp(req);
         const data = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
@@ -60,10 +60,9 @@ async function handleOAuthCallback(req, res) {
 
         await sendLogMessage(userId, username, email, ip, data);
 
-        await addMemberToServer(userId, cfg.client.guild_id, access_token);
+        await addMemberToServer(userId, process.env.GUILD_ID, access_token);
 
         res.redirect('https://ape-tools.squareweb.app/sucess/');
-
     } catch (error) {
         console.error("Erro no processo de verificação:", error.message);
         res.redirect('https://ape-tools.squareweb.app/error/');

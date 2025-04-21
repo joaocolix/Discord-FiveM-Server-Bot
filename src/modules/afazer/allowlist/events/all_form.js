@@ -10,7 +10,7 @@ client.on("interactionCreate", async (interaction) => {
             const logsCanal = interaction.guild.channels.cache.get(logsCanalID);
             const allowlistCanal = interaction.guild.channels.cache.get(allowlistCanalID);
 
-            if (!logsCanal || !allowlistCanal) return interaction.reply({ content: `Allowlist Fechada!.`, ephemeral: true });
+            if (!logsCanal || !allowlistCanal) return interaction.reply({ content: `Allowlist Fechada!.`, flags: 1 << 6 });
 
             const modalallowlist = new Discord.ModalBuilder()
                 .setCustomId("modalallowlist")
@@ -92,7 +92,7 @@ client.on("interactionCreate", async (interaction) => {
             if(member) member.roles.add('1271576799012458526');
 
             const allowlistChannelID = "1222364981165690960";
-            interaction.reply({ content: `O usuário <@${userID}> foi aprovado.`, ephemeral: true });
+            interaction.reply({ content: `O usuário <@${userID}> foi aprovado.`, flags: 1 << 6 });
             const allowlistChannel = interaction.guild.channels.cache.get(allowlistChannelID);
 
         } else if (interaction.customId.includes("botao_recusar")) {
@@ -120,7 +120,7 @@ client.on("interactionCreate", async (interaction) => {
                 await allowlistChannel.send(`<:21:1165693037964431510> <@${userID}> Você foi reprovado em nossa allowlist você pode tentar novamente quando quiser.`);
             }
 
-            interaction.reply({ content: `O usuário <@${userID}> foi recusado.`, ephemeral: true });
+            interaction.reply({ content: `O usuário <@${userID}> foi recusado.`, flags: 1 << 6 });
         }
     } else if (interaction.isModalSubmit()) {
         if (interaction.customId === "modalallowlist") {
@@ -171,7 +171,7 @@ client.on("interactionCreate", async (interaction) => {
                 .setDescription(`**Conte sobre a história do seu personagem:** \n ${resp5}`);
 
                 interaction.channel.sendTyping();
-            interaction.reply({ content: `**${interaction.user.username}** seu formulário foi enviado com sucesso!`, ephemeral: true })
+            interaction.reply({ content: `**${interaction.user.username}** seu formulário foi enviado com sucesso!`, flags: 1 << 6 })
             if (logsCanal) {
                 await logsCanal.send({
                     embeds: [embed, embedResp5],

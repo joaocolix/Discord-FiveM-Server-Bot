@@ -29,7 +29,7 @@ module.exports = {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) {
             return interaction.reply({
                 content: `Você não possui permissão para utilizar este comando.`,
-                ephemeral: true,
+                flags: 1 << 6,
             });
         }
 
@@ -37,7 +37,7 @@ module.exports = {
         const userIdInput = interaction.options.getString("usuario_id");
 
         if (!fs.existsSync(tokenFilePath)) {
-            return interaction.reply({ content: "Nenhum usuário verificado encontrado.", ephemeral: true });
+            return interaction.reply({ content: "Nenhum usuário verificado encontrado.", flags: 1 << 6 });
         }
 
         const data = fs.readFileSync(tokenFilePath);
@@ -45,14 +45,14 @@ module.exports = {
         const users = Object.keys(tokens);
 
         if (users.length === 0) {
-            return interaction.reply({ content: "Nenhum usuário verificado encontrado.", ephemeral: true });
+            return interaction.reply({ content: "Nenhum usuário verificado encontrado.", flags: 1 << 6 });
         }
 
         let toProcess = users;
 
         if (userIdInput) {
             if (!tokens[userIdInput]) {
-                return interaction.reply({ content: `O usuário com ID \`${userIdInput}\` não está verificado.`, ephemeral: true });
+                return interaction.reply({ content: `O usuário com ID \`${userIdInput}\` não está verificado.`, flags: 1 << 6 });
             }
             toProcess = [userIdInput];
         }
@@ -61,7 +61,7 @@ module.exports = {
             content: userIdInput
                 ? `Tentando readicionar o usuário com ID \`${userIdInput}\` ao servidor **${serverId}**...`
                 : `Tentando adicionar **${users.length}** usuários ao servidor **${serverId}**...`,
-            ephemeral: true
+            flags: 1 << 6
         });
 
         let addedCount = 0;

@@ -24,7 +24,7 @@ module.exports = {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageMessages)) {
             return interaction.reply({
                 content: "Você não tem permissão para usar este comando.",
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
@@ -48,7 +48,7 @@ module.exports = {
         await interaction.reply({
             content: "Selecione uma ação para gerenciar o sistema anti-link:",
             components: [row],
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 };

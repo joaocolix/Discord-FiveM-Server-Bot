@@ -25,7 +25,7 @@ client.on("interactionCreate", async (interaction) => {
     if (interaction.customId === "antilink_import_config") {
         await interaction.reply({
             content: "Envie agora o arquivo `.json` com as configurações que deseja importar. (Você tem 60 segundos)",
-            ephemeral: true
+            flags: 1 << 6
         });
 
         const filter = msg =>
@@ -46,7 +46,7 @@ client.on("interactionCreate", async (interaction) => {
                 const data = loadAntiLinkData();
 
                 if (!json || typeof json !== "object") {
-                    return msg.reply({ content: "O arquivo enviado não é um JSON válido.", ephemeral: true });
+                    return msg.reply({ content: "O arquivo enviado não é um JSON válido.", flags: 1 << 6 });
                 }
 
                 data[guildId] = {
@@ -59,7 +59,7 @@ client.on("interactionCreate", async (interaction) => {
 
                 saveAntiLinkData(data);
 
-                await msg.reply({ content: "Configurações importadas com sucesso!", ephemeral: true });
+                await msg.reply({ content: "Configurações importadas com sucesso!", flags: 1 << 6 });
 
                 await sendLog(interaction.guild, {
                     title: "Configurações Importadas",
@@ -70,7 +70,7 @@ client.on("interactionCreate", async (interaction) => {
 
             } catch (err) {
                 console.error("Erro ao importar o JSON:", err);
-                await msg.reply({ content: "Ocorreu um erro ao importar o arquivo.", ephemeral: true });
+                await msg.reply({ content: "Ocorreu um erro ao importar o arquivo.", flags: 1 << 6 });
             }
         });
 
@@ -78,7 +78,7 @@ client.on("interactionCreate", async (interaction) => {
             if (collected.size === 0) {
                 interaction.followUp({
                     content: "Tempo esgotado. Nenhum arquivo foi enviado.",
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
         });

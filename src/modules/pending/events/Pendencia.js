@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const client = require('../../../../index')
+const client = require('../../../index')
 const axios = require('axios');
 
 client.on('interactionCreate', async interaction => {

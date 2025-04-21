@@ -34,7 +34,7 @@ module.exports = {
 
       const objeto = response.data.response.objects.find(obj => obj.id === arquivoId);
       if (!objeto) {
-        return interaction.reply({ content: "Arquivo não encontrado.", ephemeral: true });
+        return interaction.reply({ content: "Arquivo não encontrado.", flags: 1 << 6 });
       }
 
       const downloadUrl = `https://public-blob.squarecloud.dev/${objeto.id}?auto_download=true`;
@@ -49,13 +49,13 @@ module.exports = {
           { name: "Download", value: `[Clique aqui](${downloadUrl})` }
         );
 
-      return interaction.reply({ embeds: [embed], ephemeral: true });
+      return interaction.reply({ embeds: [embed], flags: 1 << 6 });
 
     } catch (err) {
       console.error("Erro ao buscar backups:", err);
       return interaction.reply({
         content: "Ocorreu um erro ao buscar o backup. Tente novamente.",
-        ephemeral: true
+        flags: 1 << 6
       });
     }
   }

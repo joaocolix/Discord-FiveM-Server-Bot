@@ -30,7 +30,7 @@ module.exports = {
 
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) {
-            return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, ephemeral: true });
+            return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6 });
         }
 
         const valor = interaction.options.getNumber('valor');
@@ -76,7 +76,7 @@ module.exports = {
             components: [row]
         });
         
-        await interaction.reply({ content: `Pedido gerado com sucesso.`, ephemeral: true });
+        await interaction.reply({ content: `Pedido gerado com sucesso.`, flags: 1 << 6 });
         
         if (!client.payments) client.payments = {};
         client.payments[pedidoId] = {

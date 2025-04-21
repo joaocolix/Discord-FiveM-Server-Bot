@@ -11,7 +11,7 @@ module.exports = (client) => {
             console.error(`Erro ao executar o comando ${interaction.commandName}:`, error);
             await interaction.reply({ 
                 content: "Ocorreu um erro ao executar o comando.", 
-                ephemeral: true 
+                flags: 1 << 6 
             }).catch(console.error);
         }
     });

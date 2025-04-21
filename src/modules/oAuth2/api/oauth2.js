@@ -2,9 +2,9 @@ const fs = require('fs');
 const axios = require('axios');
 const path = require('path');
 const { addRoleToUser } = require('./role');
+require('dotenv').config();
 
 const tokenFilePath = path.join(__dirname, '../data/token.json');
-const cfg = require('../../../configs/client.json');
 
 function readTokens() {
     const data = fs.readFileSync(tokenFilePath);
@@ -36,7 +36,7 @@ async function addMemberToServer(userId, serverId, accessToken) {
             { access_token: accessToken },
             {
                 headers: {
-                    Authorization: `Bot ${cfg.client.token}`,
+                    Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
                     'Content-Type': 'application/json',
                 },
             }
@@ -61,8 +61,8 @@ async function refreshAccessToken(userId) {
 
     try {
         const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', new URLSearchParams({
-            client_id: cfg.client.id,
-            client_secret: cfg.client.secret,
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET,
             grant_type: 'refresh_token',
             refresh_token: userToken.refresh_token,
         }), {

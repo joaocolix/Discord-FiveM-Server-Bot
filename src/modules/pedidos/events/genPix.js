@@ -8,7 +8,7 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
 
     if (interaction.customId === 'copy_pix') {
-        return await interaction.reply({ content: `pagamentos@euphoriacidade.com`, ephemeral: true });
+        return await interaction.reply({ content: `pagamentos@euphoriacidade.com`, flags: 1 << 6 });
     }
 
     if (interaction.customId.startsWith('gerar_qrcode_')) {
@@ -16,7 +16,7 @@ client.on('interactionCreate', async (interaction) => {
         const pedidoData = client.payments?.[pedidoId];
 
         if (!pedidoData) {
-            return await interaction.reply({ content: '❌ Não foi possível encontrar os dados do pedido.', ephemeral: true });
+            return await interaction.reply({ content: '❌ Não foi possível encontrar os dados do pedido.', flags: 1 << 6 });
         }
 
         const pix = PIX.static()
@@ -46,7 +46,7 @@ client.on('interactionCreate', async (interaction) => {
                 name: 'qrcode.png',
                 attachment: canvas.toBuffer()
             }],
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 

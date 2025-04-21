@@ -13,7 +13,7 @@ client.on('interactionCreate', async (interaction) => {
     
         if (!embeds || embeds.length === 0) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Nenhuma embed criada ainda."
             });
         }
@@ -32,7 +32,7 @@ client.on('interactionCreate', async (interaction) => {
         const row = new Discord.ActionRowBuilder().addComponents(button);
     
         await interaction.reply({
-            ephemeral: true,
+            flags: 1 << 6,
             embeds: [embed],
             components: [row]
         });

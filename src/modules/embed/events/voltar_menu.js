@@ -9,7 +9,7 @@ client.on('interactionCreate', async (interaction) => {
     
         if (!embeds || embeds.length === 0) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Você ainda não criou nenhuma embed."
             });
         }

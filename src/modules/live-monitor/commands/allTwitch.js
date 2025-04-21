@@ -41,7 +41,7 @@ module.exports = {
             if (!twitchUsername || !discordUser) {
                 return interaction.reply({
                     content: `Por favor, forneça um nome de usuário da Twitch e o usuário do Discord para adicionar.`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
@@ -50,7 +50,7 @@ module.exports = {
             if (users.find(user => user.username === twitchUsername)) {
                 return interaction.reply({
                     content: `Esse usuário já está cadastrado.`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
@@ -59,14 +59,14 @@ module.exports = {
 
             interaction.reply({
                 content: `Usuário **${twitchUsername}** foi cadastrado para monitoramento.`,
-                ephemeral: true
+                flags: 1 << 6
             });
 
         } else if (action === 'remove') {
             if (!twitchUsername) {
                 return interaction.reply({
                     content: `Por favor, forneça um nome de usuário da Twitch para remover.`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
@@ -75,7 +75,7 @@ module.exports = {
             if (!users.find(user => user.username === twitchUsername)) {
                 return interaction.reply({
                     content: `Esse usuário não está cadastrado.`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
@@ -84,7 +84,7 @@ module.exports = {
 
             interaction.reply({
                 content: `Usuário **${twitchUsername}** foi removido do monitoramento.`,
-                ephemeral: true
+                flags: 1 << 6
             });
 
         } else if (action === 'list') {
@@ -92,14 +92,14 @@ module.exports = {
             if (users.length === 0) {
                 return interaction.reply({
                     content: `Não há usuários cadastrados para monitoramento.`,
-                    ephemeral: true
+                    flags: 1 << 6
                 });
             }
 
             const userList = users.map(user => `https://www.twitch.tv/${user.username} (Discord ID: ${user.discordId})`).join('\n');
             interaction.reply({
                 content: `Usuários cadastrados:\n${userList}`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
     }

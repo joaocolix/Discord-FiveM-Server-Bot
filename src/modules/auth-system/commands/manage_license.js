@@ -27,7 +27,7 @@ module.exports = {
         if (!userLicenses || userLicenses.length === 0) {
             return interaction.reply({
                 content: `Nenhuma licença encontrada para o ID informado.`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
@@ -48,7 +48,7 @@ module.exports = {
         await interaction.reply({
             content: `Escolha o servidor que deseja gerenciar para <@${userId}>:`,
             components: [row],
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 };

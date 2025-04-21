@@ -3,7 +3,7 @@
     "start": "concurrently \"node .\""
   },
   "dependencies": {
-    "axios": "latest",
+    "axios": "^1.8.4",
     "better-sqlite3": "latest",
     "canvas": "latest",
     "colors": "latest",
@@ -11,6 +11,7 @@
     "dateformat": "latest",
     "discord-html-transcripts": "latest",
     "discord.js": "latest",
+    "dotenv": "^16.5.0",
     "express": "latest",
     "gpix": "^1.1.3",
     "moment": "latest",

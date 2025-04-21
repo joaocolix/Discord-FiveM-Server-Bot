@@ -70,7 +70,7 @@ module.exports = {
             .setImage(banner)
 
         if (!banner) {
-            const message2 = await interaction.reply({ embeds: [embed], components: [cmp3], ephemeral: true });
+            const message2 = await interaction.reply({ embeds: [embed], components: [cmp3], flags: 1 << 6 });
             const collector = await message2.createMessageComponentCollector();
             collector.on(`collect`, async c => {
             })
@@ -78,7 +78,7 @@ module.exports = {
         }
 
         
-        const message = await interaction.reply({ embeds: [embed], components: [cmp], ephemeral: true });
+        const message = await interaction.reply({ embeds: [embed], components: [cmp], flags: 1 << 6 });
         const collector = await message.createMessageComponentCollector();
 
         collector.on(`collect`, async c => {
@@ -86,19 +86,19 @@ module.exports = {
             if (c.customId === 'avatar') {
 
                 if (c.user.id !== interaction.user.id) {
-                    return await c.reply({ content: `${error} Only ${interaction.user.tag} can interact with the buttons!`, ephemeral: true })
+                    return await c.reply({ content: `${error} Only ${interaction.user.tag} can interact with the buttons!`, flags: 1 << 6 })
                 }
 
-                await c.update({ embeds: [embed], components: [cmp], ephemeral: true })
+                await c.update({ embeds: [embed], components: [cmp], flags: 1 << 6 })
             }
 
             if (c.customId === 'banner') {
 
                 if (c.user.id !== interaction.user.id) {
-                    return await c.reply({ content: `${error} Only ${interaction.user.tag} can interact with the buttons!`, ephemeral: true })
+                    return await c.reply({ content: `${error} Only ${interaction.user.tag} can interact with the buttons!`, flags: 1 << 6 })
                 }
 
-                await c.update({ embeds: [embed2], components: [cmp2], ephemeral: true  })
+                await c.update({ embeds: [embed2], components: [cmp2], flags: 1 << 6  })
             }
         })
     }

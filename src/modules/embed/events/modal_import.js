@@ -16,7 +16,7 @@ client.on('interactionCreate', async (interaction) => {
             jsonData = JSON.parse(jsonText);
         } catch (e) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "JSON inválido. Verifique a sintaxe."
             });
         }
@@ -50,7 +50,7 @@ client.on('interactionCreate', async (interaction) => {
     
         } catch (err) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "O JSON foi lido, mas não é um Embed válido. Verifique se está no formato correto."
             });
         }

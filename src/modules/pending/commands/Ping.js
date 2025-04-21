@@ -42,7 +42,7 @@ module.exports = {
 
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has("ADMINISTRATOR")) {
-            return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, ephemeral: true });
+            return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6 });
         }
 
         const descricao = interaction.options.getString('descricao');
@@ -72,9 +72,9 @@ module.exports = {
 
         if (canal) {
             await canal.send({ embeds: [embed], components: [row] });
-            await interaction.reply({ content: `Pendência registrada e enviada para a equipe ${canal.name}.`, ephemeral: true });
+            await interaction.reply({ content: `Pendência registrada e enviada para a equipe ${canal.name}.`, flags: 1 << 6 });
         } else {
-            await interaction.reply({ content: `Não foi possível encontrar o canal especificado.`, ephemeral: true });
+            await interaction.reply({ content: `Não foi possível encontrar o canal especificado.`, flags: 1 << 6 });
         }
     }
 };

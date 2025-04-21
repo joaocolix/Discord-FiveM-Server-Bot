@@ -11,7 +11,7 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton() && interaction.customId === 'botao_remover') {
         const index = client.buttonEditSelection[interaction.user.id];
         if (index === undefined) {
-            return interaction.reply({ content: 'Você precisa selecionar um botão antes.', ephemeral: true });
+            return interaction.reply({ content: 'Você precisa selecionar um botão antes.', flags: 1 << 6 });
         }
 
         try {
@@ -27,11 +27,11 @@ client.on('interactionCreate', async (interaction) => {
                     await updateStatus.forceUpdate();
                 }
             } else {
-                await interaction.reply({ content: 'Esse botão já está vazio.', ephemeral: true });
+                await interaction.reply({ content: 'Esse botão já está vazio.', flags: 1 << 6 });
             }
         } catch (err) {
             console.error('[BOTÕES] Erro ao remover botão:', err);
-            await interaction.reply({ content: 'Erro ao remover o botão.', ephemeral: true });
+            await interaction.reply({ content: 'Erro ao remover o botão.', flags: 1 << 6 });
         }
 
         return;

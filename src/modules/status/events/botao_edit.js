@@ -11,7 +11,7 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton() && interaction.customId === 'botao_edit') {
         const index = client.buttonEditSelection[interaction.user.id];
         if (index === undefined) {
-            return interaction.reply({ content: 'Você precisa selecionar um botão antes.', ephemeral: true });
+            return interaction.reply({ content: 'Você precisa selecionar um botão antes.', flags: 1 << 6 });
         }
 
         const modal = new Discord.ModalBuilder()

@@ -37,7 +37,7 @@ client.on('interactionCreate', async (interaction) => {
             console.error('[BOTÕES] Erro ao salvar botão:', err);
             await interaction.reply({
                 content: 'Erro ao salvar o botão.',
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 

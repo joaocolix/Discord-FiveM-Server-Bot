@@ -9,7 +9,7 @@ client.on('interactionCreate', async (interaction) => {
         const pedidoData = client.payments?.[pedidoId];
 
         if (!pedidoData) {
-            return await interaction.reply({ content: '❌ Não foi possível encontrar esse pedido.', ephemeral: true });
+            return await interaction.reply({ content: '❌ Não foi possível encontrar esse pedido.', flags: 1 << 6 });
         }
 
         const nome = interaction.fields.getTextInputValue('nome');
@@ -47,7 +47,7 @@ client.on('interactionCreate', async (interaction) => {
 
             const logMsg = await logChannel.send({ embeds: [logEmbed], components: [row] });
 
-            await interaction.reply({ content: 'Confirmação enviada com sucesso! Aguarde aprovação.', ephemeral: true });
+            await interaction.reply({ content: 'Confirmação enviada com sucesso! Aguarde aprovação.', flags: 1 << 6 });
 
             client.payments[pedidoId].logMsgId = logMsg.id;
         }

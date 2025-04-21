@@ -26,7 +26,7 @@ module.exports = {
         await interaction.reply({
             content: 'Selecione uma ação:',
             components: [row],
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 };

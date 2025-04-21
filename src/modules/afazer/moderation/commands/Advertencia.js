@@ -36,19 +36,19 @@ module.exports = {
         if (!interaction.member.roles.cache.some(r => permitidos.includes(r.id))) {
             return interaction.reply({
                 content: `Opa! Você não tem permissão.`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
         const member = interaction.guild.members.cache.get(membro.id);
         if (!member) {
-            return interaction.reply({ content: `Usuário não encontrado.`, ephemeral: true });
+            return interaction.reply({ content: `Usuário não encontrado.`, flags: 1 << 6 });
         }
 
         if (membro.bot || interaction.user.id === membro.id) {
             return interaction.reply({
                 content: `Bots não recebem advertências e você não pode advertir a si mesmo.`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
@@ -108,7 +108,7 @@ module.exports = {
                 .setDescription(`**Usuário:** ${membro} (${membro.id})\n**ID:** ${id}\n**Punição:** ${nomesAdvertencias[`adv${advLevel}`]}\n**Motivo:** ${moti}\n**Advertido por:** ${interaction.user}`);
 
             warnChannel.send({ embeds: [warnEmbed] });
-            interaction.reply({ content: `Feito!`, ephemeral: true });
+            interaction.reply({ content: `Feito!`, flags: 1 << 6 });
 
             const logChannel = client.channels.cache.get(logs);
             logChannel.send({
@@ -151,7 +151,7 @@ module.exports = {
             console.error(error);
             interaction.reply({
                 content: `Houve um erro ao tentar aplicar a advertência.`,
-                ephemeral: true
+                flags: 1 << 6
             });
         }
     }

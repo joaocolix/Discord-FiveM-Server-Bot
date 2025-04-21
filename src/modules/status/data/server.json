@@ -4,8 +4,8 @@
         "serverPort": "30120",
         "serverConnect": "connect jogar.apestudio.dev",
         "status": "manutenção",
-        "statusMessageId": "1363664947749326858",
-        "statusChannelId": "1362989902089818122",
+        "statusMessageId": null,
+        "statusChannelId": null,
         "updateInterval": 1,
         "buttons": []
     }

@@ -49,7 +49,7 @@ client.on('interactionCreate', async (interaction) => {
             }
         }
 
-        await interaction.reply({ content: 'Pagamento confirmado com sucesso!', ephemeral: true });
+        await interaction.reply({ content: 'Pagamento confirmado com sucesso!', flags: 1 << 6 });
 
         await salvarVenda({
             id: pedidoId,
@@ -73,7 +73,7 @@ client.on('interactionCreate', async (interaction) => {
             await logMessage.edit({ embeds: [embed] });
         }
 
-        await interaction.reply({ content: 'Confirmação cancelada.', ephemeral: true });
+        await interaction.reply({ content: 'Confirmação cancelada.', flags: 1 << 6 });
     }
 });
 

@@ -22,7 +22,7 @@ module.exports = {
     const membroIndicado = await interaction.guild.members.fetch(amigoIndicado.id).catch(console.error);
 
     if (!membroIndicado) {
-      return interaction.reply({ ephemeral: true, content: 'Usuário não encontrado no servidor.' });
+      return interaction.reply({ flags: 1 << 6, content: 'Usuário não encontrado no servidor.' });
     }
 
     try {
@@ -35,13 +35,13 @@ module.exports = {
       const logChannel = interaction.guild.channels.cache.get(channelLogID);
       if (!logChannel) {
 
-        return interaction.reply({ ephemeral: true, content: 'Canal de log não encontrado.' });
+        return interaction.reply({ flags: 1 << 6, content: 'Canal de log não encontrado.' });
       }
 
       await logChannel.send({ embeds: [embed] });
-      await interaction.reply({ ephemeral: true, content: 'Sucesso, sua indicação foi enviada!' });
+      await interaction.reply({ flags: 1 << 6, content: 'Sucesso, sua indicação foi enviada!' });
     } catch (error) {
-      await interaction.reply({ ephemeral: true, content: 'Ocorreu um erro ao processar sua indicação.' });
+      await interaction.reply({ flags: 1 << 6, content: 'Ocorreu um erro ao processar sua indicação.' });
     }
   }
 };

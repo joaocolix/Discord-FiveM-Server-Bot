@@ -7,7 +7,7 @@ client.on("interactionCreate", async (interaction) => {
             const logsCanalID = "1313510998405287936";
             const logsCanal = interaction.guild.channels.cache.get(logsCanalID);
 
-            if (!logsCanal) return interaction.reply({ content: `O sistema está desativado.`, ephemeral: true });
+            if (!logsCanal) return interaction.reply({ content: `O sistema está desativado.`, flags: 1 << 6 });
 
             const modalBugs = new Discord.ModalBuilder()
                 .setCustomId("modalBugs")
@@ -71,7 +71,7 @@ client.on("interactionCreate", async (interaction) => {
 
             await interaction.showModal(modalResponder);
             interaction.channel.sendTyping();
-            interaction.reply({ content: `Modal de resposta enviado para ${user.tag}.`, ephemeral: true });
+            interaction.reply({ content: `Modal de resposta enviado para ${user.tag}.`, flags: 1 << 6 });
         } else if (interaction.customId.startsWith("botao_resolvido")) {
             const userID = interaction.customId.split(" ")[1];
 
@@ -110,7 +110,7 @@ client.on("interactionCreate", async (interaction) => {
                     { name: `**Como foi descoberto:**`, value: `\`\`\`${resp3}\`\`\``, inline: false }
                 );
 
-            interaction.reply({ content: `**${interaction.user.username}** seu relatório de bug foi enviado com sucesso!`, ephemeral: true });
+            interaction.reply({ content: `**${interaction.user.username}** seu relatório de bug foi enviado com sucesso!`, flags: 1 << 6 });
 
             if (logsCanal) {
                 await logsCanal.send({
@@ -137,9 +137,9 @@ client.on("interactionCreate", async (interaction) => {
 
             if (user) {
                 user.send(`Olá ${user.username}!\nA gente notou que você recentemente reportou um bug para nossa equipe. Nossos desenvolvedores deixaram um recado:\n\n<:norris2:1125956267702226954> **Mensagem:** ${resposta}`).catch(console.error);
-                interaction.reply({ content: `Resposta enviada para ${user.tag}.`, ephemeral: true });
+                interaction.reply({ content: `Resposta enviada para ${user.tag}.`, flags: 1 << 6 });
             } else {
-                interaction.reply({ content: `Usuário não encontrado.`, ephemeral: true });
+                interaction.reply({ content: `Usuário não encontrado.`, flags: 1 << 6 });
             }
         }
     }

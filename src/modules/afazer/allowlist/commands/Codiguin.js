@@ -18,7 +18,7 @@ module.exports = {
   
     run: async (client, interaction) => {
       if (!interaction.member.permissions.has(PermissionFlagsBits.ManageMessages)) {
-          return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, ephemeral: true });
+          return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6 });
       } else {
           const quantity = interaction.options.getInteger("quantity");
           let codesData = JSON.parse(fs.readFileSync(codesFilePath, 'utf8'));
@@ -37,7 +37,7 @@ module.exports = {
           .setColor('#ffcc01')
           .setDescription(`**${quantity} GERADOS**\n\`\`\`${newCodes.join('\n')}\`\`\``)
 
-          interaction.reply({ embeds: [embed], ephemeral: true });
+          interaction.reply({ embeds: [embed], flags: 1 << 6 });
       }
     }
   };

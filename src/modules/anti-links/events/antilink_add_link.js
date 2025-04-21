@@ -39,12 +39,12 @@ client.on("interactionCreate", async (interaction) => {
 
         await interaction.reply({
             content: `Link/domínio **${link}** adicionado à whitelist.`,
-            ephemeral: true
+            flags: 1 << 6
         });
     } else {
         await interaction.reply({
             content: `Esse link já está permitido.`,
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 });

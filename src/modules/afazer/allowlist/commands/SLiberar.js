@@ -1,14 +1,14 @@
 const Discord = require("discord.js")
 
 module.exports = {
-    name: "allowlist",
-    description: "[SETUP] Envia a mensagem de allowlist",
+    name: "setupliberar",
+    description: "[SETUP] Envia a mensagem de liberar",
     type: Discord.ApplicationCommandType.ChatInput,
 
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({
             content: `Você não possui permissão para utilizar este comando.`,
-            ephemeral: true,
+            flags: 1 << 6,
         })
 
         await interaction.channel.send({
@@ -16,19 +16,21 @@ module.exports = {
                 new Discord.ActionRowBuilder()
                     .addComponents(
                         new Discord.ButtonBuilder()
-                            .setCustomId('start_allowlist')
-                            .setLabel('Formulário')
-                            .setStyle(2),
-                    )
+                        .setCustomId('botao_liberar')
+                        .setLabel('Liberar')
+                        .setEmoji("<:emoji_34:1185974987954335904>")
+                        .setStyle('3')
+                      )
                     .addComponents(
                         new Discord.ButtonBuilder()
-                            .setCustomId('start_code')
-                            .setLabel('Express')
-                            .setStyle(3),
-                    ),
+                        .setCustomId('botao_resetar')
+                        .setLabel('Resetar')
+                        .setEmoji("<:reset:1283414301213720587>")
+                        .setStyle('2')
+                    )
             ]
         });
-        interaction.reply({ content: `Feito! enviei no chat`, ephemeral: true });
+        interaction.reply({ content: `Feito! enviei no chat`, flags: 1 << 6 });
 
     }
 }

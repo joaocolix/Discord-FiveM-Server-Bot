@@ -85,11 +85,11 @@ module.exports = {
           )
           .setColor("Green");
 
-        return interaction.reply({ embeds: [embed], ephemeral: true });
+        return interaction.reply({ embeds: [embed], flags: 1 << 6 });
 
       } catch (err) {
         console.error("Erro no comando /licenca criar:", err);
-        return interaction.reply({ content: "Erro ao criar a licença.", ephemeral: true });
+        return interaction.reply({ content: "Erro ao criar a licença.", flags: 1 << 6 });
       }
     }
 
@@ -103,7 +103,7 @@ module.exports = {
         const licencas = res.data.licencas;
 
         if (!licencas.length) {
-          return interaction.reply({ content: "Nenhuma licença cadastrada.", ephemeral: true });
+          return interaction.reply({ content: "Nenhuma licença cadastrada.", flags: 1 << 6 });
         }
 
         const embed = new EmbedBuilder()
@@ -118,11 +118,11 @@ module.exports = {
           });
         });
 
-        return interaction.reply({ embeds: [embed], ephemeral: true });
+        return interaction.reply({ embeds: [embed], flags: 1 << 6 });
 
       } catch (err) {
         console.error("Erro no comando /licenca listar:", err);
-        return interaction.reply({ content: "Erro ao listar licenças.", ephemeral: true });
+        return interaction.reply({ content: "Erro ao listar licenças.", flags: 1 << 6 });
       }
     }
 
@@ -136,11 +136,11 @@ module.exports = {
             "Authorization": "Bearer sk_ape_lHX7T9h!5M3oGwXK2F@dYjUvN6qzLpR8"
         }
         });
-        return interaction.reply({ content: `Licença \`${id}\` removida com sucesso.`, ephemeral: true });
+        return interaction.reply({ content: `Licença \`${id}\` removida com sucesso.`, flags: 1 << 6 });
 
       } catch (err) {
         console.error("Erro no comando /licenca remover:", err);
-        return interaction.reply({ content: "Erro ao remover a licença. Verifique o ID.", ephemeral: true });
+        return interaction.reply({ content: "Erro ao remover a licença. Verifique o ID.", flags: 1 << 6 });
       }
     }
   }

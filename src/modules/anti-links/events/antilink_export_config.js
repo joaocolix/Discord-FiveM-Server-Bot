@@ -23,7 +23,7 @@ client.on("interactionCreate", async (interaction) => {
         if (!data[guildId]) {
             return interaction.reply({
                 content: "Nenhuma configuração encontrada para exportar.",
-                ephemeral: true
+                flags: 1 << 6
             });
         }
     
@@ -37,14 +37,16 @@ client.on("interactionCreate", async (interaction) => {
         
         const configJson = JSON.stringify(config, null, 4);        
     
+        const buffer = Buffer.from(configJson, 'utf-8');
+
         const attachment = new Discord.AttachmentBuilder(buffer, {
             name: `antilink-config-${guildId}.json`
         });
-    
+                
         await interaction.reply({
             content: "Aqui está sua configuração exportada:",
             files: [attachment],
-            ephemeral: true
+            flags: 1 << 6
         });
     }
     

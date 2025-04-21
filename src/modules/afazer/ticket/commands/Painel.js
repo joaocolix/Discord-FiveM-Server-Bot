@@ -8,7 +8,7 @@ module.exports = {
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({
             content: `Você não possui permissão para utilizar este comando.`,
-            ephemeral: true,
+            flags: 1 << 6,
         })
 
         await interaction.reply({
@@ -26,7 +26,7 @@ module.exports = {
                                 { label: 'Finalizar', value: `delete_ticket`, emoji: '<:atalhos:1176712854137745408>', description: 'Finalize o ticket gerando transcript.' },
                             )
                     )
-            ], ephemeral: true
+            ], flags: 1 << 6
         });
     }
 }

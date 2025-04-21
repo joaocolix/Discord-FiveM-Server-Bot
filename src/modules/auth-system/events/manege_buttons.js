@@ -26,7 +26,7 @@ client.on('interactionCreate', async (interaction) => {
     if (!licenca) {
         return interaction.reply({
             content: 'Licença não encontrada.',
-            ephemeral: true
+            flags: 1 << 6
         });
     }
 

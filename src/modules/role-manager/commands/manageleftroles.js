@@ -32,7 +32,7 @@ module.exports = {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.ManageRoles)) {
             return interaction.reply({
                 content: "Você não tem permissão para usar este comando.",
-                ephemeral: true,
+                flags: 1 << 6,
             });
         }
 
@@ -55,7 +55,7 @@ module.exports = {
         } else {
             return interaction.reply({
                 content: "Usuário não encontrado e sem cargos salvos.",
-                ephemeral: true,
+                flags: 1 << 6,
             });
         }
 
@@ -81,7 +81,7 @@ module.exports = {
         await interaction.reply({
             content: `Gerencie os cargos salvos para <@${userId}>:`,
             components: [row],
-            ephemeral: true,
+            flags: 1 << 6,
         });
     },
 };

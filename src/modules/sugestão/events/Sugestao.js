@@ -57,7 +57,7 @@
 //     if (!votoData) {
 //         return interaction.reply({
 //             content: 'Os votos não estão mais disponíveis para essa sugestão.',
-//             ephemeral: true
+//             flags: 1 << 6
 //         });
 //     }
 
@@ -67,14 +67,14 @@
 //         votoData.nao.delete(userId);
 //         votoData.sim.add(userId);
 //         await atualizarBotoes(votoData);
-//         return interaction.reply({ content: 'Seu voto foi registrado como **Concorda**.', ephemeral: true });
+//         return interaction.reply({ content: 'Seu voto foi registrado como **Concorda**.', flags: 1 << 6 });
 //     }
 
 //     if (interaction.customId === 'votar_nao') {
 //         votoData.sim.delete(userId);
 //         votoData.nao.add(userId);
 //         await atualizarBotoes(votoData);
-//         return interaction.reply({ content: 'Seu voto foi registrado como **Discorda**.', ephemeral: true });
+//         return interaction.reply({ content: 'Seu voto foi registrado como **Discorda**.', flags: 1 << 6 });
 //     }
 // });
 

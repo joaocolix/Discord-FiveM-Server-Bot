@@ -50,7 +50,7 @@ module.exports = {
         );
 
         await interaction.reply({
-            ephemeral: true,
+            flags: 1 << 6,
             embeds: [novaEmbed],
             components: [rowMenu, rowBotoes]
         });

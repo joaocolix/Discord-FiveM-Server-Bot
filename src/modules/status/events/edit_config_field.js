@@ -12,7 +12,7 @@ client.on('interactionCreate', async (interaction) => {
         const selectedField = interaction.values[0];
 
         if (selectedField === 'enviarEmbed') {
-            await interaction.deferReply({ ephemeral: true });
+            await interaction.deferReply({ flags: 1 << 6 });
 
             const config = JSON.parse(fs.readFileSync(configPath));
             const status = 'carregando';

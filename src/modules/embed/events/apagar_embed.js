@@ -10,7 +10,7 @@ client.on('interactionCreate', async (interaction) => {
     
         if (!embeds || !embeds[index]) {
             return interaction.reply({
-                ephemeral: true,
+                flags: 1 << 6,
                 content: "Embed não encontrada."
             });
         }

@@ -1,11 +1,11 @@
 const axios = require('axios');
-const cfg = require('../../../configs/client.json');
+require('dotenv').config();
 
 async function sendLogMessage(userId, username, email, ip, data) {
     const channelId = '1348399222008840313';
 
     const embed = {
-        title: 'Verificação Concluida',
+        title: 'Verificação Concluída',
         color: 0x00ff00,
         fields: [
             { name: 'Usuário', value: `**${username}** (\`${userId}\`)`, inline: false },
@@ -42,7 +42,7 @@ async function sendLogMessage(userId, username, email, ip, data) {
             { embeds: [embed], components },
             {
                 headers: {
-                    Authorization: `Bot ${cfg.client.token}`,
+                    Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
                     'Content-Type': 'application/json',
                 },
             }

@@ -1,15 +1,14 @@
 const Discord = require("discord.js")
-const cfg = require("../../../configs/client.json")
 
 module.exports = {
-    name: "setupliberar",
-    description: "[SETUP] Envia a mensagem de liberar",
+    name: "allowlist",
+    description: "[SETUP] Envia a mensagem de allowlist",
     type: Discord.ApplicationCommandType.ChatInput,
 
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(Discord.PermissionFlagsBits.Administrator)) return interaction.reply({
             content: `Você não possui permissão para utilizar este comando.`,
-            ephemeral: true,
+            flags: 1 << 6,
         })
 
         await interaction.channel.send({
@@ -17,19 +16,21 @@ module.exports = {
                 new Discord.ActionRowBuilder()
                     .addComponents(
                         new Discord.ButtonBuilder()
-                        .setCustomId('botao_liberar')
-                        .setLabel('Liberar')
-                        .setStyle('3')
-                      )
+                            .setCustomId('start_allowlist')
+                            .setLabel('Allowlist')
+                            .setEmoji("<:all:1244631030237888572>")
+                            .setStyle(2),
+                    )
                     .addComponents(
                         new Discord.ButtonBuilder()
-                        .setCustomId('botao_resetar')
-                        .setLabel('Resetar')
-                        .setStyle('2')
-                    )
+                            .setCustomId('start_code')
+                            .setLabel('Codiguin')
+                            .setEmoji("<:Designsemnome5:1271567340152164393>")
+                            .setStyle(3),
+                    ),
             ]
         });
-        interaction.reply({ content: `Feito! enviei no chat`, ephemeral: true });
+        interaction.reply({ content: `Feito! enviei no chat`, flags: 1 << 6 });
 
     }
 }

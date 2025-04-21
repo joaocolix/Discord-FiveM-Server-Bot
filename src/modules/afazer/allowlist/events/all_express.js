@@ -35,18 +35,18 @@ client.on("interactionCreate", async (interaction) => {
             try {
                 codesData = JSON.parse(fs.readFileSync(codesFilePath, 'utf8'));
             } catch (error) {
-                return interaction.reply({ content: 'Ops! Ocorreu um erro ao processar seu pedido. Tente novamente mais tarde.', ephemeral: true });
+                return interaction.reply({ content: 'Ops! Ocorreu um erro ao processar seu pedido. Tente novamente mais tarde.', flags: 1 << 6 });
             }
 
             if (codesData[code]) {
                 if (codesData[code].usedBy) {
-                    return interaction.reply({ content: `Esse token já foi utilizado.`, ephemeral: true });
+                    return interaction.reply({ content: `Esse token já foi utilizado.`, flags: 1 << 6 });
                 } else {
                     codesData[code].usedBy = interaction.user.id;
                     try {
                         fs.writeFileSync(codesFilePath, JSON.stringify(codesData, null, 2));
                     } catch (error) {
-                        return interaction.reply({ content: 'Ops! Não foi possível salvar as mudanças. Tente novamente mais tarde.', ephemeral: true });
+                        return interaction.reply({ content: 'Ops! Não foi possível salvar as mudanças. Tente novamente mais tarde.', flags: 1 << 6 });
                     }
 
                     const roleID = '1271576799012458526';
@@ -55,10 +55,10 @@ client.on("interactionCreate", async (interaction) => {
                         await member.roles.add(roleID);
                     }
 
-                    return interaction.reply({ content: `Feito! Libere o seu ID no canal <#1212171713371054180>.`, ephemeral: true });
+                    return interaction.reply({ content: `Feito! Libere o seu ID no canal <#1212171713371054180>.`, flags: 1 << 6 });
                 }
             } else {
-                return interaction.reply({ content: `Inválido, esse codiguin não é válido.`, ephemeral: true });
+                return interaction.reply({ content: `Inválido, esse codiguin não é válido.`, flags: 1 << 6 });
             }
         }
     }
