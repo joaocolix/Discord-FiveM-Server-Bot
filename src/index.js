@@ -34,7 +34,7 @@ client.slashCommands = new Discord.Collection();
 
 require('./handler/slashCommands')(client);
 require('./handler/eventsPath')(client);
-// require('./handler/onError')(client);
+require('./handler/onError')(client);
 require('./handler/onInteraction')(client);
 require('./handler/apiServer')(client);
 

@@ -53,7 +53,7 @@ client.on('interactionCreate', async (interaction) => {
 
             client.payments[pedidoId].logMsgId = logMsg.id;
         } else {
-            await interaction.reply({ content: 'Canal de logs não configurado ou não acessível.', ephemeral: true });
+            await interaction.reply({ content: 'Canal de logs não configurado ou não acessível.', flags: 1 << 6  });
         }
     }
 });

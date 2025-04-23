@@ -52,7 +52,7 @@ client.on('interactionCreate', async (interaction) => {
             return await interaction.showModal(modal);
         }
 
-        if (selected === 'canal_logs') {
+        if (selected === 'canais_logs') {
             const row = new ActionRowBuilder().addComponents(
                 new ChannelSelectMenuBuilder()
                     .setCustomId('selecionar_canais_logs')
@@ -62,10 +62,27 @@ client.on('interactionCreate', async (interaction) => {
                     .addChannelTypes(Discord.ChannelType.GuildText)
             );
         
-            return await interaction.reply({
+            return await interaction.update({
                 content: 'Selecione os canais para receber logs:',
                 components: [row],
-                ephemeral: true
+                flags: 1 << 6
+            });
+        }
+
+        if (selected === 'canal_confirmacao') {
+            const row = new ActionRowBuilder().addComponents(
+                new ChannelSelectMenuBuilder()
+                    .setCustomId('selecionar_canal_confirmacao')
+                    .setPlaceholder('Selecione o canal de confirmação')
+                    .setMinValues(1)
+                    .setMaxValues(1)
+                    .addChannelTypes(Discord.ChannelType.GuildText)
+            );
+        
+            return await interaction.update({
+                content: 'Selecione o canal onde as confirmações serão enviadas:',
+                components: [row],
+                flags: 1 << 6
             });
         }
     }
@@ -78,12 +95,12 @@ client.on('interactionCreate', async (interaction) => {
             return await interaction.update({
                 content: 'Chave PIX inválida. Use um e-mail válido, tipo `pix@dominio.com`.',
                 components: [ ],
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
         updateConfig('chave_pix', nova);
-        return await interaction.update({ content: 'Chave PIX atualizada com sucesso!', components: [], ephemeral: true });
+        return await interaction.update({ content: 'Chave PIX atualizada com sucesso!', components: [], flags: 1 << 6  });
     }
 
     if (interaction.isModalSubmit() && interaction.customId === 'config_imagem_embed') {
@@ -91,14 +108,14 @@ client.on('interactionCreate', async (interaction) => {
 
         const isURLValida = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(nova);
         if (!isURLValida) {
-            return await interaction.reply({
+            return await interaction.update({
                 content: 'URL inválida. Ela precisa terminar com `.jpg`, `.png`, `.gif`, etc.',
-                ephemeral: true
+                flags: 1 << 6
             });
         }
 
         updateConfig('imagem_embed', nova);
-        return await interaction.reply({ content: 'Imagem da embed atualizada com sucesso!', ephemeral: true });
+        return await interaction.update({ content: 'Imagem da embed atualizada com sucesso!',components: [], flags: 1 << 6  });
     }
 
     if (interaction.isChannelSelectMenu() && interaction.customId === 'selecionar_canais_logs') {
@@ -110,4 +127,15 @@ client.on('interactionCreate', async (interaction) => {
             components: []
         });
     }
+
+    if (interaction.isChannelSelectMenu() && interaction.customId === 'selecionar_canal_confirmacao') {
+        const canal = interaction.values[0];
+    
+        updateConfig('canal_confirmacao', canal);
+    
+        return await interaction.update({
+            content: `Canal de confirmação atualizado para: <#${canal}>`,
+            components: []
+        });
+    }    
 }); 

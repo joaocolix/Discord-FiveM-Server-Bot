@@ -8,7 +8,7 @@ module.exports = {
 
     run: async (client, interaction) => {
         if (!interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            return interaction.reply({ content: 'Você não tem permissão para usar esse comando.', ephemeral: true });
+            return interaction.reply({ content: 'Você não tem permissão para usar esse comando.', flags: 1 << 6 });
         }
 
         const menu = new StringSelectMenuBuilder()
@@ -23,6 +23,6 @@ module.exports = {
 
         const row = new ActionRowBuilder().addComponents(menu);
 
-        await interaction.reply({ content: 'Selecione uma opção de configuração:', components: [row], ephemeral: true });
+        await interaction.reply({ content: 'Selecione uma opção de configuração:', components: [row], flags: 1 << 6 });
     }
 };

@@ -1,7 +1,8 @@
 {
     "prefixo": "+s",
-    "criarTopico": false,
+    "criarTopico": true,
     "canaisPermitidos": [
-        "1362456320606998558"
+        "1362456320606998558",
+        "1337853743357759558"
     ]
 }

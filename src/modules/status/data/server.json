@@ -3,10 +3,16 @@
         "serverIp": "189.127.164.166",
         "serverPort": "30120",
         "serverConnect": "connect jogar.apestudio.dev",
-        "status": "manutenção",
+        "status": "online",
         "statusMessageId": null,
         "statusChannelId": null,
         "updateInterval": 1,
-        "buttons": []
+        "buttons": [
+            {
+                "label": "bLAB BLA BLA",
+                "url": "https://apestudio.dev",
+                "emoji": null
+            }
+        ]
     }
 }
