@@ -10,20 +10,20 @@ client.on('interactionCreate', async (interaction) => {
         const pedidoData = client.payments?.[pedidoId];
 
         if (!pedidoData) {
-            return await interaction.reply({ content: '❌ Não foi possível encontrar esse pedido.', flags: 1 << 6 });
+            return await interaction.reply({ content: 'Não foi possível encontrar esse pedido.', flags: 1 << 6 });
         }
 
         const nome = interaction.fields.getTextInputValue('nome');
         const cpf = interaction.fields.getTextInputValue('cpf');
         const instituicao = interaction.fields.getTextInputValue('instituicao');
 
-        const config = getConfig(); // ← usa as configurações
-        const logChannel = await client.channels.fetch(config.canal_logs).catch(() => null); // ← canal de logs dinâmico
+        const config = getConfig();
+        const logChannel = await client.channels.fetch(config.canais_logs).catch(() => null);
 
         if (logChannel && logChannel.isTextBased()) {
             const logEmbed = new Discord.EmbedBuilder()
                 .setColor('#ffaa00')
-                .setTitle('💸 Confirmação de Pagamento Recebida')
+                .setTitle('Confirmação de Pagamento Recebida')
                 .addFields(
                     { name: "Pedido", value: `\`${pedidoId}\``, inline: true },
                     { name: "Nome", value: nome, inline: true },
@@ -39,21 +39,21 @@ client.on('interactionCreate', async (interaction) => {
                 .addComponents(
                     new Discord.ButtonBuilder()
                         .setCustomId(`confirmar_final_${pedidoId}`)
-                        .setLabel('✅ Confirmar')
+                        .setLabel('Confirmar')
                         .setStyle(Discord.ButtonStyle.Success),
                     new Discord.ButtonBuilder()
                         .setCustomId(`cancelar_final_${pedidoId}`)
-                        .setLabel('❌ Cancelar')
+                        .setLabel('Cancelar')
                         .setStyle(Discord.ButtonStyle.Danger)
                 );
 
             const logMsg = await logChannel.send({ embeds: [logEmbed], components: [row] });
 
-            await interaction.reply({ content: '✅ Confirmação enviada com sucesso! Aguarde aprovação.', flags: 1 << 6 });
+            await interaction.reply({ content: 'Confirmação enviada com sucesso! Aguarde aprovação.', flags: 1 << 6 });
 
             client.payments[pedidoId].logMsgId = logMsg.id;
         } else {
-            await interaction.reply({ content: '⚠️ Canal de logs não configurado ou não acessível.', ephemeral: true });
+            await interaction.reply({ content: 'Canal de logs não configurado ou não acessível.', ephemeral: true });
         }
     }
 });

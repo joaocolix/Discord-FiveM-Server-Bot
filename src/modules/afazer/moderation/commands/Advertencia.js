@@ -52,7 +52,6 @@ module.exports = {
             });
         }
 
-        // IDs dos cargos
         const cargos = {
             adv1: "1140886498137354240",
             adv2: "1140886542622150656",
@@ -67,7 +66,7 @@ module.exports = {
 
         const logs = '1263698647456026654';
         const warn = '1274549874385227878';
-        const banChannel = '1263698671174811728'; // Canal para registrar o aviso de banimento
+        const banChannel = '1263698671174811728';
         const userWarnings = `quant_${interaction.user.id}`;
         let roleToAdd, roleToRemove, advLevel;
 

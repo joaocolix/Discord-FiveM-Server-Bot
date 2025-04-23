@@ -15,14 +15,14 @@ module.exports = {
             .setCustomId('config_pedido_menu')
             .setPlaceholder('O que você deseja configurar?')
             .addOptions([
-                { label: 'Chave PIX', value: 'chave_pix', emoji: '🔑' },
-                { label: 'Canal de Logs', value: 'canal_logs', emoji: '📢' },
-                { label: 'Canal de Confirmação', value: 'canal_confirmacao', emoji: '📥' },
-                { label: 'Imagem da Embed PEDIDO GERADO', value: 'imagem_embed', emoji: '🖼️' }
+                { label: 'Chave PIX', value: 'chave_pix'},
+                { label: 'Canal de Logs', value: 'canais_logs'},
+                { label: 'Canal de Confirmação', value: 'canal_confirmacao'},
+                { label: 'Imagem da Embed PEDIDO GERADO', value: 'imagem_embed'}
             ]);
 
         const row = new ActionRowBuilder().addComponents(menu);
 
-        await interaction.reply({ content: '⚙️ Selecione uma opção de configuração:', components: [row], ephemeral: true });
+        await interaction.reply({ content: 'Selecione uma opção de configuração:', components: [row], ephemeral: true });
     }
 };

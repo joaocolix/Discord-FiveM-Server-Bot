@@ -15,7 +15,6 @@ client.on('interactionCreate', async (interaction) => {
     const pedidoData = client.payments?.[pedidoId];
     if (!pedidoData) return;
 
-    // ✅ CONFIRMAR PAGAMENTO
     if (interaction.customId.startsWith('confirmar_final_')) {
         const channel = interaction.channel;
         const logMessage = await channel.messages.fetch(pedidoData.logMsgId).catch(() => null);
@@ -27,7 +26,6 @@ client.on('interactionCreate', async (interaction) => {
             await logMessage.edit({ embeds: [updatedEmbed], components: [] });
         }
 
-        // Aqui usamos o canal_confirmacao vindo da config
         const pedidoChannel = interaction.guild.channels.cache.get(
             config.canal_confirmacao || pedidoData.pedidoChannelId || interaction.channelId
         );
@@ -61,7 +59,7 @@ client.on('interactionCreate', async (interaction) => {
             }
         }
 
-        await interaction.reply({ content: '✅ Pagamento confirmado com sucesso!', flags: 1 << 6 });
+        await interaction.reply({ content: 'Pagamento confirmado com sucesso!', flags: 1 << 6 });
 
         await salvarVenda({
             id: pedidoId,
@@ -72,7 +70,6 @@ client.on('interactionCreate', async (interaction) => {
         });
     }
 
-    // ❌ CANCELAR PAGAMENTO
     if (interaction.customId.startsWith('cancelar_final_')) {
         const channel = interaction.channel;
         const logMessage = await channel.messages.fetch(pedidoData.logMsgId).catch(() => null);
@@ -89,7 +86,6 @@ client.on('interactionCreate', async (interaction) => {
     }
 });
 
-// 🧾 Salvar Venda
 async function salvarVenda(dados) {
     try {
         let vendas = [];
@@ -104,7 +100,5 @@ async function salvarVenda(dados) {
         });
 
         fs.writeFileSync(vendasPath, JSON.stringify(vendas, null, 2));
-    } catch (err) {
-        console.error('Erro ao salvar venda:', err);
-    }
+    } catch (err) {}
 }

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const { PIX } = require('gpix/dist');
 const Canvas = require('canvas');
 const moment = require('moment-timezone');
-const { getConfig } = require('../events/configManager'); // ajuste o caminho se necessário
+const { getConfig } = require('../events/configManager');
 
 module.exports = {
     name: 'gerar-pedido',
@@ -37,7 +37,7 @@ module.exports = {
         const config = getConfig();
         const chave = config.chave_pix;
         const imagem = config.imagem_embed;
-        const canalLogsId = config.canal_logs;
+        const canalLogsId = config.canais_logs;
 
         const valor = interaction.options.getNumber('valor');
         const desc = interaction.options.getString('descrição');
@@ -92,13 +92,12 @@ module.exports = {
             pedidoChannelId: sentMsg.channel.id
         };
 
-        // Canal de log agora vem da config
         const logChannel = await client.channels.fetch(canalLogsId).catch(() => null);
 
         if (logChannel && logChannel.isTextBased()) {
             const logEmbed = new Discord.EmbedBuilder()
                 .setColor("#ffcc01")
-                .setTitle("📦 Novo Pedido Gerado")
+                .setTitle("Novo Pedido Gerado")
                 .addFields(
                     { name: "Cliente", value: `${pagador}`, inline: true },
                     { name: "Produto", value: `\`${desc}\``, inline: true },

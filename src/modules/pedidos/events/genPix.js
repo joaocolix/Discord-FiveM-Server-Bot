@@ -19,7 +19,7 @@ client.on('interactionCreate', async (interaction) => {
         const pedidoData = client.payments?.[pedidoId];
 
         if (!pedidoData) {
-            return await interaction.reply({ content: '❌ Não foi possível encontrar os dados do pedido.', flags: 1 << 6 });
+            return await interaction.reply({ content: 'Não foi possível encontrar os dados do pedido.', flags: 1 << 6 });
         }
 
         const pix = PIX.static()
@@ -39,7 +39,7 @@ client.on('interactionCreate', async (interaction) => {
 
         const embed = new Discord.EmbedBuilder()
             .setColor('#00ff00')
-            .setTitle('🔄 QR Code PIX Gerado')
+            .setTitle('QR Code PIX Gerado')
             .setDescription(`Use o QR Code abaixo para realizar o pagamento do pedido **${pedidoId}**\n\n**Valor:** R$ ${pedidoData.valor}`)
             .setImage('attachment://qrcode.png');
 
