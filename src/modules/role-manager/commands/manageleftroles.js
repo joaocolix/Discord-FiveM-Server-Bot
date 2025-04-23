@@ -16,7 +16,7 @@ function saveStoredRoles(data) {
 }
 
 module.exports = {
-    name: "gerenciarcargos",
+    name: "cargos",
     description: "[MODERAÇÃO] Gerencia os cargos de membros, mesmo se saíram do servidor",
     type: Discord.ApplicationCommandType.ChatInput,
     options: [

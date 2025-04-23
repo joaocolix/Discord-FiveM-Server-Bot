@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = {
-    name: "sugestaoconfig",
+    name: "sugestao",
     description: "[ADMIN] Configurar sistema de sugestões.",
     type: Discord.ApplicationCommandType.ChatInput,
 

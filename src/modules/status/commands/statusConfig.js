@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = {
-    name: "statusconfig",
+    name: "status",
     description: "[ADMIN] Editar valores do server.json ou enviar embed de status.",
     type: Discord.ApplicationCommandType.ChatInput,
 

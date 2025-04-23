@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = require('../../../index');
+const { getConfig } = require('./configManager');
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isModalSubmit()) return;
@@ -16,7 +17,8 @@ client.on('interactionCreate', async (interaction) => {
         const cpf = interaction.fields.getTextInputValue('cpf');
         const instituicao = interaction.fields.getTextInputValue('instituicao');
 
-        const logChannel = await client.channels.fetch('1360728564831621274').catch(() => null);
+        const config = getConfig(); // ← usa as configurações
+        const logChannel = await client.channels.fetch(config.canal_logs).catch(() => null); // ← canal de logs dinâmico
 
         if (logChannel && logChannel.isTextBased()) {
             const logEmbed = new Discord.EmbedBuilder()
@@ -47,9 +49,11 @@ client.on('interactionCreate', async (interaction) => {
 
             const logMsg = await logChannel.send({ embeds: [logEmbed], components: [row] });
 
-            await interaction.reply({ content: 'Confirmação enviada com sucesso! Aguarde aprovação.', flags: 1 << 6 });
+            await interaction.reply({ content: '✅ Confirmação enviada com sucesso! Aguarde aprovação.', flags: 1 << 6 });
 
             client.payments[pedidoId].logMsgId = logMsg.id;
+        } else {
+            await interaction.reply({ content: '⚠️ Canal de logs não configurado ou não acessível.', ephemeral: true });
         }
     }
 });

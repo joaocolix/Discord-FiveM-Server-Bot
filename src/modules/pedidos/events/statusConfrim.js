@@ -1,13 +1,21 @@
 const Discord = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 const client = require('../../../index');
+const { getConfig } = require('./configManager');
+
+const vendasPath = path.resolve(__dirname, '../data/vendas.json');
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
+
+    const config = getConfig();
 
     const pedidoId = interaction.customId.split('_')[2];
     const pedidoData = client.payments?.[pedidoId];
     if (!pedidoData) return;
 
+    // ✅ CONFIRMAR PAGAMENTO
     if (interaction.customId.startsWith('confirmar_final_')) {
         const channel = interaction.channel;
         const logMessage = await channel.messages.fetch(pedidoData.logMsgId).catch(() => null);
@@ -19,7 +27,11 @@ client.on('interactionCreate', async (interaction) => {
             await logMessage.edit({ embeds: [updatedEmbed], components: [] });
         }
 
-        const pedidoChannel = interaction.guild.channels.cache.get(pedidoData.pedidoChannelId || interaction.channelId);
+        // Aqui usamos o canal_confirmacao vindo da config
+        const pedidoChannel = interaction.guild.channels.cache.get(
+            config.canal_confirmacao || pedidoData.pedidoChannelId || interaction.channelId
+        );
+
         if (pedidoChannel) {
             let pedidoMsg = null;
 
@@ -49,7 +61,7 @@ client.on('interactionCreate', async (interaction) => {
             }
         }
 
-        await interaction.reply({ content: 'Pagamento confirmado com sucesso!', flags: 1 << 6 });
+        await interaction.reply({ content: '✅ Pagamento confirmado com sucesso!', flags: 1 << 6 });
 
         await salvarVenda({
             id: pedidoId,
@@ -58,9 +70,9 @@ client.on('interactionCreate', async (interaction) => {
             pagadorId: pedidoData.pagadorId,
             criadoPor: pedidoData.criadoPor
         });
-        
     }
 
+    // ❌ CANCELAR PAGAMENTO
     if (interaction.customId.startsWith('cancelar_final_')) {
         const channel = interaction.channel;
         const logMessage = await channel.messages.fetch(pedidoData.logMsgId).catch(() => null);
@@ -73,15 +85,11 @@ client.on('interactionCreate', async (interaction) => {
             await logMessage.edit({ embeds: [embed] });
         }
 
-        await interaction.reply({ content: 'Confirmação cancelada.', flags: 1 << 6 });
+        await interaction.reply({ content: '🚫 Confirmação cancelada.', flags: 1 << 6 });
     }
 });
 
-const fs = require('fs');
-const path = require('path');
-
-const vendasPath = path.resolve(__dirname, '../data/vendas.json');
-
+// 🧾 Salvar Venda
 async function salvarVenda(dados) {
     try {
         let vendas = [];

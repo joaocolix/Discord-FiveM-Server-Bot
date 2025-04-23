@@ -3,12 +3,15 @@ const Canvas = require('canvas');
 const moment = require('moment-timezone');
 const Discord = require('discord.js');
 const client = require('../../../index');
+const { getConfig } = require('./configManager');
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return;
 
+    const config = getConfig();
+
     if (interaction.customId === 'copy_pix') {
-        return await interaction.reply({ content: `pagamentos@euphoriacidade.com`, flags: 1 << 6 });
+        return await interaction.reply({ content: config.chave_pix, flags: 1 << 6 });
     }
 
     if (interaction.customId.startsWith('gerar_qrcode_')) {
@@ -82,6 +85,7 @@ client.on('interactionCreate', async (interaction) => {
         );
 
         await interaction.showModal(modal);
+
         const message = await interaction.message.fetch().catch(() => null);
         if (message) {
             const components = message.components.map(row => {

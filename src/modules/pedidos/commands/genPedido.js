@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { PIX } = require('gpix/dist');
 const Canvas = require('canvas');
 const moment = require('moment-timezone');
+const { getConfig } = require('../events/configManager'); // ajuste o caminho se necessário
 
 module.exports = {
     name: 'gerar-pedido',
@@ -33,10 +34,14 @@ module.exports = {
             return interaction.reply({ content: `Você não possui permissão para utilizar este comando.`, flags: 1 << 6 });
         }
 
+        const config = getConfig();
+        const chave = config.chave_pix;
+        const imagem = config.imagem_embed;
+        const canalLogsId = config.canal_logs;
+
         const valor = interaction.options.getNumber('valor');
         const desc = interaction.options.getString('descrição');
         const pagador = interaction.options.getUser('pagador');
-        const chave = 'pix@apestudio.dev';
         const pedidoId = Date.now().toString();
 
         const pedidoData = {
@@ -47,37 +52,39 @@ module.exports = {
             valor,
             pedidoId,
             criadoPor: interaction.user.id,
+            pagadorId: pagador.id
         };
 
         const embed = new Discord.EmbedBuilder()
             .setColor("#d6dae7")
-            .setImage("https://cdn.discordapp.com/attachments/1053066500002558012/1337962534073794611/Pagamentos_APE.png")
+            .setImage(imagem)
             .setFooter({ text: `Horário (UTC-3): ${moment().tz('America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss')}` })
-            .setDescription(`## PEDIDO GERADO\n**DETALHES:**\n- **Cliente:** ${pagador}\n- **Produto:** \`${desc}\`\n- **Valor:** \`R$ ${valor},00\`\n\n**Destino:** Levi Gurgel | NuBank\n\nSelecione seu método de pagamento abaixo!`);
+            .setDescription(
+                `## PEDIDO GERADO\n**DETALHES:**\n- **Cliente:** ${pagador}\n- **Produto:** \`${desc}\`\n- **Valor:** \`R$ ${valor},00\`\n\n**Destino:** Levi Gurgel | NuBank\n\nSelecione seu método de pagamento abaixo!`
+            );
 
-        const row = new Discord.ActionRowBuilder()
-            .addComponents(
-                new Discord.ButtonBuilder()
-                    .setCustomId(`gerar_qrcode_${pedidoId}`)
-                    .setLabel('Gerar QR Code')
-                    .setStyle(Discord.ButtonStyle.Primary),
-                new Discord.ButtonBuilder()
-                    .setCustomId(`copy_pix`)
-                    .setLabel('Chave PIX')
-                    .setStyle(Discord.ButtonStyle.Success),
-                new Discord.ButtonBuilder()
-                    .setCustomId(`confirmar_pagamento_${pedidoId}`)
-                    .setLabel('Confirmar Pagamento')
-                    .setStyle(Discord.ButtonStyle.Secondary)
-            );        
+        const row = new Discord.ActionRowBuilder().addComponents(
+            new Discord.ButtonBuilder()
+                .setCustomId(`gerar_qrcode_${pedidoId}`)
+                .setLabel('Gerar QR Code')
+                .setStyle(Discord.ButtonStyle.Primary),
+            new Discord.ButtonBuilder()
+                .setCustomId(`copy_pix`)
+                .setLabel('Chave PIX')
+                .setStyle(Discord.ButtonStyle.Success),
+            new Discord.ButtonBuilder()
+                .setCustomId(`confirmar_pagamento_${pedidoId}`)
+                .setLabel('Confirmar Pagamento')
+                .setStyle(Discord.ButtonStyle.Secondary)
+        );
 
         const sentMsg = await interaction.channel.send({
             embeds: [embed],
             components: [row]
         });
-        
+
         await interaction.reply({ content: `Pedido gerado com sucesso.`, flags: 1 << 6 });
-        
+
         if (!client.payments) client.payments = {};
         client.payments[pedidoId] = {
             ...pedidoData,
@@ -85,7 +92,9 @@ module.exports = {
             pedidoChannelId: sentMsg.channel.id
         };
 
-        const logChannel = await client.channels.fetch('1360728564831621274').catch(() => null);
+        // Canal de log agora vem da config
+        const logChannel = await client.channels.fetch(canalLogsId).catch(() => null);
+
         if (logChannel && logChannel.isTextBased()) {
             const logEmbed = new Discord.EmbedBuilder()
                 .setColor("#ffcc01")
@@ -102,4 +111,4 @@ module.exports = {
             await logChannel.send({ embeds: [logEmbed] });
         }
     }
-}
+};
