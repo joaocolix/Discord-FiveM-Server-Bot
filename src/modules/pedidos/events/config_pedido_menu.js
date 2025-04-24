@@ -1,15 +1,12 @@
 const Discord = require('discord.js');
-const {
-    ActionRowBuilder,
-    ModalBuilder,
-    TextInputBuilder,
-    TextInputStyle,
-    StringSelectMenuBuilder,
-    ChannelSelectMenuBuilder,
-    ChannelType
-} = require('discord.js');  
-
+const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, StringSelectMenuBuilder, ChannelSelectMenuBuilder, ChannelType } = require('discord.js');  
 const client = require('../../../index');
+
+const Canvas = require('canvas');
+const fs = require('fs');
+const path = require('path');
+const moment = require('moment-timezone');
+
 const { updateConfig } = require('./configManager');
 const { getConfig } = require('./configManager');
 const config = getConfig();
@@ -85,6 +82,25 @@ client.on('interactionCreate', async (interaction) => {
                 flags: 1 << 6
             });
         }
+
+        if (selected === 'relatorio_vendas') {
+            const modal = new ModalBuilder()
+                .setCustomId('modal_relatorio_vendas')
+                .setTitle('Relatório de Vendas')
+                .addComponents(
+                    new ActionRowBuilder().addComponents(
+                        new TextInputBuilder()
+                            .setCustomId('dias_relatorio')
+                            .setLabel('Quantos dias considerar?')
+                            .setStyle(TextInputStyle.Short)
+                            .setRequired(true)
+                            .setPlaceholder('Ex: 7')
+                    )
+                );
+        
+            return await interaction.showModal(modal);
+        }
+ 
     }
 
     if (interaction.isModalSubmit() && interaction.customId === 'config_chave_pix') {
@@ -138,4 +154,93 @@ client.on('interactionCreate', async (interaction) => {
             components: []
         });
     }    
+
+    if (interaction.isModalSubmit() && interaction.customId === 'modal_relatorio_vendas') {
+        const diasInput = interaction.fields.getTextInputValue('dias_relatorio');
+        const dias = parseInt(diasInput);
+
+        if (isNaN(dias) || dias <= 0) {
+            return await interaction.update({
+                components: [],
+                content: 'Informe um número válido de dias.',
+                flags: 1 << 6
+            });
+        }
+
+        const vendasPath = path.resolve(__dirname, '../data/vendas.json');
+
+        if (!fs.existsSync(vendasPath)) {
+            return await interaction.update({
+                components: [],
+                content: 'Nenhuma venda registrada ainda.',
+                flags: 1 << 6
+            });
+        }
+
+        const vendas = JSON.parse(fs.readFileSync(vendasPath));
+
+        const vendasFiltradas = vendas.filter(v => {
+            const dataVenda = moment(v.dataConfirmacao);
+            return dataVenda.isAfter(moment().subtract(dias, 'days'));
+        });
+
+        if (vendasFiltradas.length === 0) {
+            return await interaction.update({
+                components: [],
+                content: `Nenhuma venda registrada nos últimos ${dias} dias.`,
+                flags: 1 << 6
+            });
+        }
+
+        const vendasPorDia = {};
+        for (const venda of vendasFiltradas) {
+            const dia = moment(venda.dataConfirmacao).format('DD/MM');
+            vendasPorDia[dia] = (vendasPorDia[dia] || 0) + venda.valor;
+        }
+
+        const labels = Object.keys(vendasPorDia);
+        const valores = Object.values(vendasPorDia);
+        const total = valores.reduce((acc, val) => acc + val, 0);
+
+        const width = 800;
+        const height = 600;
+        const canvas = Canvas.createCanvas(width, height);
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, width, height);
+
+        const maxValor = Math.max(...valores);
+        const barWidth = 50;
+        const gap = 30;
+        const baseY = height - 100;
+
+        labels.forEach((label, i) => {
+            const barHeight = (valores[i] / maxValor) * 300;
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(60 + i * (barWidth + gap), baseY - barHeight, barWidth, barHeight);
+
+            ctx.fillStyle = '#000';
+            ctx.font = '16px sans-serif';
+            ctx.fillText(`R$${valores[i]}`, 60 + i * (barWidth + gap), baseY - barHeight - 10);
+            ctx.fillText(label, 60 + i * (barWidth + gap), baseY + 20);
+        });
+
+        const buffer = canvas.toBuffer();
+
+        const embed = new Discord.EmbedBuilder()
+            .setColor('#2ecc71')
+            .setTitle('Relatório de Vendas')
+            .setDescription(`**Total de vendas nos últimos ${dias} dias:** R$ ${total.toFixed(2)}`)
+            .setImage('attachment://grafico.png')
+            .setFooter({ text: `Relatório gerado em ${moment().tz('America/Sao_Paulo').format('DD/MM/YYYY HH:mm:ss')}` });
+
+        await interaction.update({
+            embeds: [embed],
+            components: [],
+            content: ``,
+            files: [{ name: 'grafico.png', attachment: buffer }],
+            flags: 1 << 6
+        });
+    }
 }); 
