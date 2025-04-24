@@ -2,7 +2,7 @@ const axios = require('axios');
 const path = require('path');
 const { storeAccessToken, addMemberToServer } = require('./oauth2');
 const { sendLogMessage } = require('./logs');
-require('dotenv').config(); // importante garantir isso aqui
+require('dotenv').config();
 
 async function getUserIp(req) {
     let ip = req.headers['x-forwarded-for']?.split(',')[0] || req.socket.remoteAddress;
