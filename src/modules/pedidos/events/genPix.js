@@ -10,9 +10,25 @@ client.on('interactionCreate', async (interaction) => {
 
     const config = getConfig();
 
-    if (interaction.customId === 'copy_pix') {
-        return await interaction.reply({ content: config.chave_pix, flags: 1 << 6 });
+if (interaction.customId.startsWith('copy_pix_')) {
+    const pedidoId = interaction.customId.split('_')[2];
+    const pedidoData = client.payments?.[pedidoId];
+
+    if (!pedidoData) {
+        return await interaction.reply({ content: 'Não foi possível encontrar os dados do pedido.', flags: 1 << 6 });
     }
+
+    const pix = PIX.static()
+        .setReceiverName(pedidoData.nomeRecebedor)
+        .setReceiverCity(pedidoData.cidade)
+        .setKey(pedidoData.chave)
+        .setDescription(pedidoData.descricao)
+        .setAmount(pedidoData.valor);
+
+    const copiaECola = pix.getBRCode();
+
+    return await interaction.reply({ content: `${copiaECola}`, flags: 1 << 6 });
+}
 
     if (interaction.customId.startsWith('gerar_qrcode_')) {
         const pedidoId = interaction.customId.split('_')[2];

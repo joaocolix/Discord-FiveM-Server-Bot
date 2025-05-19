@@ -87,7 +87,7 @@ module.exports = {
 
             const row = new Discord.ActionRowBuilder().addComponents(
                 new Discord.ButtonBuilder().setCustomId(`gerar_qrcode_${pedidoId}`).setLabel('Gerar QR Code').setStyle(Discord.ButtonStyle.Primary),
-                new Discord.ButtonBuilder().setCustomId(`copy_pix`).setLabel('Chave PIX').setStyle(Discord.ButtonStyle.Success),
+                new Discord.ButtonBuilder().setCustomId(`copy_pix_${pedidoId}`).setLabel('Chave PIX').setStyle(Discord.ButtonStyle.Success),
                 new Discord.ButtonBuilder().setCustomId(`confirmar_pagamento_${pedidoId}`).setLabel('Confirmar Pagamento').setStyle(Discord.ButtonStyle.Secondary)
             );
 
