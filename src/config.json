@@ -1,0 +1,9 @@
+{
+  "webhookURL": "https://discord.com/api/webhooks/1282091921224896676/91oA78mfe_h7_eMP3U4gHRPNOHPeSXUV5Quw1Q0CDYbzOwvSnNKQF9X6A7t1pqbINVkm",
+  "resTypes": {
+    "success": { "color": 5687335, "emoji": "<:check:1374462509276201160>" },
+    "error":   { "color": 15548997, "emoji": "<:cancel:1374462507321786379>" },
+    "warning": { "color": 16776988, "emoji": "<:minus:1374462513990602822>" },
+    "info":    { "color": 5793266,  "emoji": "<:more:1374462502863376445>" }
+  }
+}

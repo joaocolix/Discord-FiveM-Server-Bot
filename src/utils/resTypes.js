@@ -1,16 +1,9 @@
 const { EmbedBuilder } = require("discord.js");
-
-const types = {
-    success: { color: 0x57F287, emoji: "✅" },
-    error:   { color: 0xED4245, emoji: "❌" },
-    warning: { color: 0xFEE75C, emoji: "⚠️" },
-    info:    { color: 0x5865F2, emoji: "ℹ️" },
-    default: { color: 0x2F3136, emoji: "📢" }
-};
+const { resTypes } = require('../config.json');
 
 const res = Object.create(
     {},
-    Object.entries(types).reduce((obj, [name, { color, emoji }]) => {
+    Object.entries(resTypes).reduce((obj, [name, { color, emoji }]) => {
         obj[name] = {
             enumerable: true,
             writable: false,

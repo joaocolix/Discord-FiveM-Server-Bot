@@ -1,14 +1,13 @@
-const webhookURL = 'https://discord.com/api/webhooks/1282091921224896676/91oA78mfe_h7_eMP3U4gHRPNOHPeSXUV5Quw1Q0CDYbzOwvSnNKQF9X6A7t1pqbINVkm';
+const { webhookURL } = require('../config.json');
+require('colors');
 
-function sendToWebhook(message) {
-    fetch(webhookURL, {
+async function sendToWebhook(message) {
+    const fetch = (await import('node-fetch')).default;
+
+    await fetch(webhookURL, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            content: message, 
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: message }),
     })
     .then(res => res.json())
     .then(json => console.log("Mensagem enviada ao webhook:", json))

@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 const antiLinkPath = path.join(__dirname, "../data/antiLinkChannels.json");
+const embeds = require('../../../utils/resTypes');
 
 function loadAntiLinkData() {
     if (!fs.existsSync(antiLinkPath)) {
