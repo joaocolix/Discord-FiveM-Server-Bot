@@ -4,13 +4,13 @@
         "serverPort": "30120",
         "serverConnect": "connect jogar.apestudio.dev",
         "status": "online",
-        "statusMessageId": null,
-        "statusChannelId": null,
+        "statusMessageId": "1374792136767311923",
+        "statusChannelId": "1364840803897311292",
         "updateInterval": 1,
         "buttons": [
             {
-                "label": "bLAB BLA BLA",
-                "url": "https://apestudio.dev",
+                "label": "Eu amo o Levi",
+                "url": "https://testes.com",
                 "emoji": null
             }
         ]

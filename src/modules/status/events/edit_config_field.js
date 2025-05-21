@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const configPath = path.join(__dirname, '../data/server.json');
 const { gerarBanner } = require('../gerarBanner');
 const client = require('../../../index');
+const res = require('../../../utils/resTypes');
 
 client.buttonEditSelection = {};
 
@@ -12,7 +13,6 @@ client.on('interactionCreate', async (interaction) => {
         const selectedField = interaction.values[0];
 
         if (selectedField === 'enviarEmbed') {
-            await interaction.deferReply({ flags: 1 << 6 });
 
             const config = JSON.parse(fs.readFileSync(configPath));
             const status = 'carregando';
@@ -62,9 +62,12 @@ client.on('interactionCreate', async (interaction) => {
             config.Server.statusChannelId = sentMessage.channel.id;
             fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
 
-            await interaction.editReply({
-                content: 'Embed de status enviada com sucesso neste canal!',
-            });
+            await interaction.update(
+                res.success('Embed de status enviada com sucesso neste canal!', {
+                    components: [],
+                    ephemeral: true
+                })
+            );
 
             return;
         }
@@ -80,10 +83,13 @@ client.on('interactionCreate', async (interaction) => {
 
             const row = new Discord.ActionRowBuilder().addComponents(manutencaoMenu);
 
-            await interaction.update({
-                content: 'Escolha se deseja ativar ou desativar o modo manutenção:',
-                components: [row]
-            });
+            await interaction.update(
+                res.info('Escolha se deseja ativar ou desativar o modo manutenção:', {
+                    components: [row],
+                    content: ``,
+                    ephemeral: true
+                })
+            );
 
             return;
         }
@@ -136,10 +142,13 @@ client.on('interactionCreate', async (interaction) => {
                     .setStyle(Discord.ButtonStyle.Danger)
             );
 
-            await interaction.update({
-                content: 'Selecione qual botão deseja editar:',
-                components: [selectRow, actionRow]
-            });
+            await interaction.update(
+                res.info('Selecione qual botão deseja editar:', {
+                    components: [selectRow, actionRow],
+                    content: ``,
+                    ephemeral: true
+                })
+            );
 
             return;
         }

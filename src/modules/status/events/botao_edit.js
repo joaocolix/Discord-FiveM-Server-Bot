@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const configPath = path.join(__dirname, '../data/server.json');
 const { gerarBanner } = require('../gerarBanner');
 const client = require('../../../index');
+const res = require('../../../utils/resTypes');
 
 client.buttonEditSelection = {};
 
@@ -11,7 +12,11 @@ client.on('interactionCreate', async (interaction) => {
     if (interaction.isButton() && interaction.customId === 'botao_edit') {
         const index = client.buttonEditSelection[interaction.user.id];
         if (index === undefined) {
-            return interaction.reply({ content: 'Você precisa selecionar um botão antes.', flags: 1 << 6 });
+            return interaction.reply(
+                res.warning('Você precisa selecionar um botão antes.', {
+                    ephemeral: true
+                })
+            );
         }
 
         const modal = new Discord.ModalBuilder()

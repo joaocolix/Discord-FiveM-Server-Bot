@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 const configPath = path.join(__dirname, '../data/server.json');
 const { gerarBanner } = require('../gerarBanner');
 const client = require('../../../index');
-
+const res = require('../../../utils/resTypes');
 client.buttonEditSelection = {};
 
 client.on('interactionCreate', async (interaction) => {
@@ -26,19 +26,25 @@ client.on('interactionCreate', async (interaction) => {
 
             fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
 
-            await interaction.deferUpdate(); 
-
             const updateStatus = require('./updateStatusMessage');
             if (typeof updateStatus.forceUpdate === 'function') {
                 await updateStatus.forceUpdate();
             }
 
+            await interaction.update(
+                res.success(`Botão ${index + 1} atualizado com sucesso!`, {
+                    content:``,
+                    components:[],
+                    ephemeral: true
+                })
+            );
+
         } catch (err) {
-            console.error('[BOTÕES] Erro ao salvar botão:', err);
-            await interaction.reply({
-                content: 'Erro ao salvar o botão.',
-                flags: 1 << 6
-            });
+            await interaction.reply(
+                res.error('Erro ao salvar o botão.', {
+                    ephemeral: true
+                })
+            );
         }
 
         return;

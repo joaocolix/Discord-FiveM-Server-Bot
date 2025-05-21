@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const configPath = path.join(__dirname, '../data/server.json');
 const { gerarBanner } = require('../gerarBanner');
 const client = require('../../../index');
+const res = require('../../../utils/resTypes');
 
 client.buttonEditSelection = {};
 
@@ -18,10 +19,11 @@ client.on('interactionCreate', async (interaction) => {
             if (field === 'updateInterval') {
                 const minutes = parseInt(newValue);
                 if (isNaN(minutes) || minutes <= 0) {
-                    return await interaction.update({
-                        content: `O valor precisa ser um número maior que zero.`,
-                        components: []
-                    });
+                    return await interaction.update(
+                        res.warning("O valor precisa ser um número maior que zero.", {
+                            components: []
+                        })
+                    );
                 }
                 currentConfig.Server.updateInterval = minutes;
             } else {
@@ -30,10 +32,12 @@ client.on('interactionCreate', async (interaction) => {
 
             fs.writeFileSync(configPath, JSON.stringify(currentConfig, null, 4));
 
-            await interaction.update({
-                content: `Campo **${field}** atualizado com sucesso!`,
-                components: []
-            });
+            await interaction.update(
+                res.success(`Campo **${field}** atualizado com sucesso!`, {
+                    components: [],
+                    content: ``
+                })
+            );
 
             const updateStatus = require('./updateStatusMessage');
             if (typeof updateStatus.forceUpdate === 'function') {
@@ -45,10 +49,11 @@ client.on('interactionCreate', async (interaction) => {
             }
         } catch (err) {
             console.error('[CONFIG] Erro ao atualizar campo:', err);
-            await interaction.update({
-                content: `Erro ao atualizar o campo **${field}**.`,
-                components: []
-            });
+            await interaction.update(
+                res.error(`Erro ao atualizar o campo **${field}**.`, {
+                    components: []
+                })
+            );
         }
     }
 });

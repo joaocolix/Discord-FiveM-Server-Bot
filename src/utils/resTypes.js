@@ -9,7 +9,7 @@ const res = Object.create(
             writable: false,
             value(description, options = {}) {
                 const embed = new EmbedBuilder()
-                    .setDescription(`${emoji} ${description}`)
+                    .setDescription(`${emoji}  ${description}`)
                     .setColor(color);
 
                 if (options.title) {
