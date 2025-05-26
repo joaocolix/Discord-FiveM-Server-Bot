@@ -1,5 +1,5 @@
 {
-  "webhookURL": "https://discord.com/api/webhooks/1282091921224896676/91oA78mfe_h7_eMP3U4gHRPNOHPeSXUV5Quw1Q0CDYbzOwvSnNKQF9X6A7t1pqbINVkm",
+  "webhookURL": "https://discord.com/api/webhooks/1376608348983660805/Qe1Sfm7vqKS1CVO4kcf06m5rMH4sC5HChgIL46ZGdIGC6FSc01pnoIR1BSv8cbg43CM3",
   "resTypes": {
     "success": { "color": "#22c55e", "emoji": "<:check:1374462509276201160>" },
     "error":   { "color": "#ed4245", "emoji": "<:cancel:1374462507321786379>" },

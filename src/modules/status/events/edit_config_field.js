@@ -39,12 +39,15 @@ client.on('interactionCreate', async (interaction) => {
             const row = new Discord.ActionRowBuilder();
 
             btns.forEach(btn => {
-                const button = new Discord.ButtonBuilder()
-                    .setStyle(Discord.ButtonStyle.Link)
-                    .setLabel(btn.label)
-                    .setURL(btn.url);
-                if (btn.emoji) button.setEmoji(btn.emoji);
-                row.addComponents(button);
+                if (btn && typeof btn.label === 'string' && typeof btn.url === 'string') {
+                    const button = new Discord.ButtonBuilder()
+                        .setStyle(Discord.ButtonStyle.Link)
+                        .setLabel(btn.label)
+                        .setURL(btn.url);
+
+                    if (btn.emoji) button.setEmoji(btn.emoji);
+                    row.addComponents(button);
+                } 
             });
 
             const messagePayload = {
@@ -119,10 +122,17 @@ client.on('interactionCreate', async (interaction) => {
             
             const options = [0, 1, 2].map(i => {
                 const btn = btns[i];
-                return {
-                    label: btn?.label || `Botão ${i + 1} (vazio)`,
-                    value: `${i}`
-                };
+                if (btn && typeof btn.label === 'string') {
+                    return {
+                        label: btn.label,
+                        value: `${i}`
+                    };
+                } else {
+                    return {
+                        label: `Botão ${i + 1} (vazio)`,
+                        value: `${i}`
+                    };
+                }
             });
             
             const buttonSelector = new Discord.StringSelectMenuBuilder()

@@ -4,15 +4,21 @@
         "serverPort": "30120",
         "serverConnect": "connect jogar.apestudio.dev",
         "status": "online",
-        "statusMessageId": "1374792136767311923",
+        "statusMessageId": "1376608562435985489",
         "statusChannelId": "1364840803897311292",
         "updateInterval": 1,
         "buttons": [
             {
-                "label": "Eu amo o Levi",
-                "url": "https://testes.com",
+                "label": "Eu amo a Iris",
+                "url": "https://apestudio.dev/",
                 "emoji": null
-            }
+            },
+            {
+                "label": "Eu amo o levi",
+                "url": "https://apestudio.dev",
+                "emoji": null
+            },
+            null
         ]
     }
 }
