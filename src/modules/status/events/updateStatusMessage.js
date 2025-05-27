@@ -58,20 +58,30 @@ async function updateStatusMessage() {
     const duration = moment.duration(targetTime.diff(now));
     const countdown = `${Math.floor(duration.asHours())}h ${duration.minutes()}m`;
 
-    const statusColorMap = {
+    const statusColorMap = config.statusColors || {
         online: '#00FF47',
         offline: '#FF3333',
         manutenção: '#FFD700',
-        carregando: '#00C8FF',
+        carregando: '#00C8FF'
     };
 
     const corEmbed = statusColorMap[status] || '#FFFFFF';
 
-    const bannerBuffer = await gerarBanner({
-        status,
-        jogadores: players.toString(),
-        reinicio: countdown
-    });
+    let bannerBuffer;
+    if (config.autoGenerateImages !== false) {
+        bannerBuffer = await gerarBanner({
+            status,
+            jogadores: players.toString(),
+            reinicio: countdown
+        });
+    } else {
+        const imagePath = config.statusImages?.[status];
+        if (!imagePath || !fs.existsSync(imagePath)) {
+            console.warn(`[STATUS] Imagem personalizada para status '${status}' não encontrada.`);
+            return;
+        }
+        bannerBuffer = fs.readFileSync(imagePath);
+    }
 
     const bannerAttachment = new Discord.AttachmentBuilder(bannerBuffer, { name: 'status.png' });
 
@@ -85,7 +95,7 @@ async function updateStatusMessage() {
         .setFooter({ text: `Última vez atualizado: ${lastUpdatedTime} (UTC-3)` })
         .setImage('attachment://status.png');
 
-    const btns = (config.Server.buttons || []).slice(0, 3);
+    const btns = (config.Server.buttons || []).slice(0, 3).filter(Boolean); // remove nulls
     const row = new Discord.ActionRowBuilder();
 
     btns.forEach(btn => {
@@ -93,7 +103,9 @@ async function updateStatusMessage() {
             .setStyle(Discord.ButtonStyle.Link)
             .setLabel(btn.label)
             .setURL(btn.url);
+
         if (btn.emoji) button.setEmoji(btn.emoji);
+
         row.addComponents(button);
     });
 

@@ -19,26 +19,30 @@ client.on('interactionCreate', async (interaction) => {
 
             fs.writeFileSync(configPath, JSON.stringify(config, null, 4));
 
-            await interaction.update(
-                res.success(`Modo **${acao === 'ativar' ? 'manutenção ativado' : 'manutenção desativado'}** com sucesso!`, {
-                    components: []
-                })
-            );
-
             const updateStatus = require('./updateStatusMessage');
+
             if (typeof updateStatus.forceUpdate === 'function') {
                 await updateStatus.forceUpdate();
             }
 
+            if (!interaction.replied && !interaction.deferred) {
+                await interaction.update(
+                    res.success(`Modo **${acao === 'ativar' ? 'manutenção ativado' : 'manutenção desativado'}** com sucesso!`, {
+                        components: []
+                    })
+                );
+            }
         } catch (err) {
             console.error('[MANUTENÇÃO] Erro ao atualizar status:', err);
-            await interaction.update(
-                res.error('Erro ao atualizar o status de manutenção.', {
-                    components: []
-                })
-            );
-        }
 
-        return;
+            if (!interaction.replied && !interaction.deferred) {
+                await interaction.reply(
+                    res.error('Erro ao atualizar o status de manutenção.', {
+                        components: [],
+                        ephemeral: true
+                    })
+                );
+            }
+        }
     }
 });

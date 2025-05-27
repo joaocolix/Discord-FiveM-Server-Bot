@@ -75,6 +75,59 @@ client.on('interactionCreate', async (interaction) => {
             return;
         }
 
+        if (selectedField === 'editColors') {
+            const modal = new Discord.ModalBuilder()
+                .setCustomId('edit_colors_modal')
+                .setTitle('Editar Cores dos Status');
+
+            const makeInput = (id, label, placeholder) =>
+                new Discord.ActionRowBuilder().addComponents(
+                    new Discord.TextInputBuilder()
+                        .setCustomId(id)
+                        .setLabel(label)
+                        .setStyle(Discord.TextInputStyle.Short)
+                        .setRequired(false)
+                        .setPlaceholder(placeholder)
+                );
+
+            modal.addComponents(
+                makeInput('online', 'Cor Online', '#00FF47'),
+                makeInput('offline', 'Cor Offline', '#FF3333'),
+                makeInput('carregando', 'Cor Carregando', '#00C8FF'),
+                makeInput('manutencao', 'Cor Manutenção', '#FFD700')
+            );
+
+            await interaction.showModal(modal);
+            return;
+        }
+
+        if (selectedField === 'editImages') {
+            const modal = new Discord.ModalBuilder()
+                .setCustomId('edit_images_modal')
+                .setTitle('Editar Imagens dos Status');
+
+            const makeInput = (id, label, placeholder) =>
+                new Discord.ActionRowBuilder().addComponents(
+                    new Discord.TextInputBuilder()
+                        .setCustomId(id)
+                        .setLabel(label)
+                        .setStyle(Discord.TextInputStyle.Short)
+                        .setRequired(false)
+                        .setPlaceholder(placeholder)
+                );
+
+            modal.addComponents(
+                makeInput('online_image', 'Imagem Online', 'https://...'),
+                makeInput('offline_image', 'Imagem Offline', 'https://...'),
+                makeInput('carregando_image', 'Imagem Carregando', 'https://...'),
+                makeInput('manutencao_image', 'Imagem Manutenção', 'https://...'),
+                makeInput('auto_generate', 'Gerar imagens automaticamente? (Sim/Não)', 'Sim')
+            );
+
+            await interaction.showModal(modal);
+            return;
+        }
+
         if (selectedField === 'setManutencao') {
             const manutencaoMenu = new Discord.StringSelectMenuBuilder()
                 .setCustomId('set_manutencao_status')

@@ -14,7 +14,9 @@ module.exports = {
             { label: 'Intervalo de atualização', value: 'updateInterval' },
             { label: 'Editar Botões do Embed', value: 'editButtons' },
             { label: 'Modo Manutenção', value: 'setManutencao' },
-            { label: 'Enviar Status', value: 'enviarEmbed' }
+            { label: 'Enviar Status', value: 'enviarEmbed' },
+            { label: 'Editar Cores dos Status', value: 'editColors' },
+            { label: 'Editar Imagens dos Status', value: 'editImages' }
         ];
 
         const selectMenu = new Discord.StringSelectMenuBuilder()

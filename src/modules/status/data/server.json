@@ -3,9 +3,9 @@
         "serverIp": "189.127.164.166",
         "serverPort": "30120",
         "serverConnect": "connect jogar.apestudio.dev",
-        "status": "online",
-        "statusMessageId": "1376608562435985489",
-        "statusChannelId": "1364840803897311292",
+        "status": "manutenção",
+        "statusMessageId": null,
+        "statusChannelId": null,
         "updateInterval": 1,
         "buttons": [
             {
@@ -20,5 +20,18 @@
             },
             null
         ]
-    }
+    },
+    "statusColors": {
+        "online": "#00FF47",
+        "offline": "#FF3333",
+        "carregando": "#FFD700",
+        "manutencao": "#00C8FF"
+    },
+    "statusImages": {
+        "online": "",
+        "offline": "",
+        "carregando": "",
+        "manutencao": ""
+    },
+    "autoGenerateImages": true
 }
