@@ -9,8 +9,14 @@ async function sendToWebhook(message) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: message }),
     })
-    .then(res => res.json())
-    .then(json => console.log("Mensagem enviada ao webhook:", json))
+    .then(async res => {
+        if (res.status === 204) {
+            console.log("Mensagem enviada ao webhook com sucesso (sem conteúdo de resposta).");
+        } else {
+            const json = await res.json();
+            console.log("Resposta do webhook:", json);
+        }
+    })
     .catch(err => console.error("Erro ao enviar webhook:", err));
 }
 
