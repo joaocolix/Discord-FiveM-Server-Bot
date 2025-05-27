@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const client = require('../../../index');
 const configPath = path.join(__dirname, '../data/sugestao.json');
 let sugestaoConfig = require(configPath);
+const res = require("../../../utils/resTypes");
 
 client.on('interactionCreate', async interaction => {
     if (interaction.isStringSelectMenu()) {
@@ -47,11 +48,12 @@ client.on('interactionCreate', async interaction => {
 
                 const row = new Discord.ActionRowBuilder().addComponents(select);
 
-                return interaction.update({
-                    content: 'Selecione os canais para receber sugestões:',
-                    components: [row],
-                    flags: 1 << 6
-                });
+                return interaction.update(
+                    res.info("Selecione os canais para receber sugestões:", {
+                        ephemeral: true,
+                        components: [row]
+                    })
+                );
             }
 
             if (escolha === 'editar_topico') {
@@ -65,11 +67,12 @@ client.on('interactionCreate', async interaction => {
 
                 const row = new Discord.ActionRowBuilder().addComponents(topicoSelect);
 
-                return interaction.update({
-                    content: `Escolha se deseja criar tópicos automaticamente ao receber uma sugestão:`,
-                    components: [row],
-                    flags: 1 << 6
-                });
+                return interaction.update(
+                        res.info("Escolha se deseja criar tópicos automaticamente ao receber uma sugestão:", {
+                        ephemeral: true,
+                        components: [row]
+                    })
+                );
             }
         }
 
@@ -77,22 +80,24 @@ client.on('interactionCreate', async interaction => {
             sugestaoConfig.canaisPermitidos = interaction.values;
             fs.writeFileSync(configPath, JSON.stringify(sugestaoConfig, null, 4));
 
-            return interaction.update({
-                content: `Canais atualizados com sucesso!\nAgora permitidos: ${interaction.values.map(id => `<#${id}>`).join(', ')}`,
-                components: [ ],
-                flags: 1 << 6
-            });
+            return interaction.update(
+                res.success(`Canais atualizados com sucesso!\nAgora permitidos: ${interaction.values.map(id => `<#${id}>`).join(', ')}`, {
+                    ephemeral: true,
+                    components: []
+                })      
+            );
         }
 
         if (interaction.customId === 'config_topico_select') {
             sugestaoConfig.criarTopico = interaction.values[0] === 'true';
             fs.writeFileSync(configPath, JSON.stringify(sugestaoConfig, null, 4));
 
-            return interaction.update({
-                content: `Criação de tópico agora está **${sugestaoConfig.criarTopico ? "ativada" : "desativada"}**.`,
-                components: [ ],
-                flags: 1 << 6
-            });
+            return interaction.update(
+                    res.success(`Criação de tópico agora está **${sugestaoConfig.criarTopico ? "ativada" : "desativada"}**.`, {
+                    ephemeral: true,
+                    components: []
+                }) 
+            );
         }
     }
 
@@ -102,11 +107,12 @@ client.on('interactionCreate', async interaction => {
             sugestaoConfig.prefixo = novoPrefixo;
             fs.writeFileSync(configPath, JSON.stringify(sugestaoConfig, null, 4));
 
-            return interaction.update({
-                content: `Prefixo atualizado para: \`${novoPrefixo}\``,
-                components: [ ],
-                flags: 1 << 6
-            });
+            return interaction.update(
+                    res.success(`Prefixo atualizado para: \`${novoPrefixo}\``, {
+                    ephemeral: true,
+                    components: []
+                }) 
+            );
         }
     }
 });

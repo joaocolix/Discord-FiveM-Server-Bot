@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const Discord = require("discord.js");
-const res = require("../../../utils/resTypes"); // usa seu sistema res
+const res = require("../../../utils/resTypes");
 const filePath = path.join(__dirname, "../data/fixedMessages.json");
 
 module.exports = {

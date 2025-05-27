@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const res = require("../../../utils/resTypes");
 
 module.exports = {
     name: "sugestao",
@@ -17,10 +18,11 @@ module.exports = {
 
         const row = new Discord.ActionRowBuilder().addComponents(selectMenu);
 
-        await interaction.reply({
-            content: "Selecione uma configuração para alterar:",
-            components: [row],
-            flags: 1 << 6
-        });
+        await interaction.reply(
+            res.info("Selecione uma configuração para alterar:", {
+                ephemeral: true,
+                components: [row]
+            })
+        );
     }
 };
