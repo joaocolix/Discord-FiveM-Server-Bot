@@ -54,7 +54,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.isModalSubmit() && interaction.customId === 'descricao_modal') {
         const { equipe } = pendenciasTemp[interaction.user.id] || {};
         const descricao = interaction.fields.getTextInputValue('descricao_input');
-        if (!equipe) return interaction.reply({ content: 'Erro: nenhuma equipe selecionada.', ephemeral: true });
+        if (!equipe) return interaction.update({ content: 'Erro: nenhuma equipe selecionada.', ephemeral: true, components: [ ] });
 
         const data = moment().tz("America/Sao_Paulo");
         const canal = await interaction.client.channels.fetch(equipe);
@@ -69,7 +69,7 @@ client.on('interactionCreate', async interaction => {
 
         await canal.send({ embeds: [embed], components: [row] });
         delete pendenciasTemp[interaction.user.id];
-        return interaction.reply({ content: 'Pendência enviada com sucesso!', ephemeral: true });
+        return interaction.update({ content: 'Pendência enviada com sucesso!', ephemeral: true, components: [ ] });
     }
 
     if (interaction.isButton() && interaction.customId === 'add_equipe_btn') {
@@ -185,24 +185,24 @@ client.on('interactionCreate', async interaction => {
             equipes.push({ name: nome, value: canal });
             fs.writeFileSync(equipesPath, JSON.stringify(equipes, null, 4));
             delete gerenciamentoTemp[userId];
-            return interaction.reply({ content: 'Equipe adicionada com sucesso!', ephemeral: true });
+            return interaction.update({ content: 'Equipe adicionada com sucesso!', ephemeral: true, components: [ ] });
         }
 
-        return interaction.reply({ content: 'Nome salvo. Agora selecione o canal.', ephemeral: true });
+        return interaction.update({ content: 'Nome salvo. Agora selecione o canal.', ephemeral: true, components: [ ] });
     }
 
     if (interaction.isModalSubmit() && interaction.customId === 'modal_nome_para_canal') {
         const nome = interaction.fields.getTextInputValue('nome_input');
         const canal = gerenciamentoTemp[userId]?.canal;
     
-        if (!canal) return interaction.reply({ content: 'Erro: nenhum canal selecionado.', ephemeral: true });
+        if (!canal) return interaction.update({ content: 'Erro: nenhum canal selecionado.', ephemeral: true, components: [ ] });
     
         const equipes = JSON.parse(fs.readFileSync(equipesPath));
         equipes.push({ name: nome, value: canal });
         fs.writeFileSync(equipesPath, JSON.stringify(equipes, null, 4));
     
         delete gerenciamentoTemp[userId];
-        return interaction.reply({ content: 'Equipe adicionada com sucesso!', ephemeral: true });
+        return interaction.update({ content: 'Equipe adicionada com sucesso!', ephemeral: true, components: [ ] });
     }
 
     if (interaction.isModalSubmit() && interaction.customId === 'modal_editar_nome') {
@@ -210,14 +210,14 @@ client.on('interactionCreate', async interaction => {
         const dados = gerenciamentoTemp[userId];
     
         if (!dados || !dados.editar || !dados.novoCanal) {
-            return interaction.reply({ content: 'Erro ao editar equipe. Dados incompletos.', ephemeral: true });
+            return interaction.update({ content: 'Erro ao editar equipe. Dados incompletos.', ephemeral: true, components: [ ] });
         }
     
         const equipes = JSON.parse(fs.readFileSync(equipesPath));
         const index = equipes.findIndex(e => e.value === dados.editar);
     
         if (index === -1) {
-            return interaction.reply({ content: 'Equipe não encontrada.', ephemeral: true });
+            return interaction.update({ content: 'Equipe não encontrada.', ephemeral: true, components: [ ] });
         }
     
         equipes[index] = {
@@ -228,18 +228,18 @@ client.on('interactionCreate', async interaction => {
         fs.writeFileSync(equipesPath, JSON.stringify(equipes, null, 4));
         delete gerenciamentoTemp[userId];
     
-        return interaction.reply({ content: 'Equipe editada com sucesso!', ephemeral: true });
+        return interaction.update({ content: 'Equipe editada com sucesso!', ephemeral: true, components: [ ] });
     }
     
 
     if (interaction.isButton() && interaction.customId === 'remove_equipe_btn') {
         const equipes = JSON.parse(fs.readFileSync(equipesPath));
     
-        // ✅ Verifica se há equipes antes de tentar montar o menu
         if (!equipes.length) {
-            return interaction.reply({
-                content: '❌ Não há nenhuma equipe cadastrada para remover.',
-                ephemeral: true
+            return interaction.update({
+                content: 'Não há nenhuma equipe cadastrada para remover.',
+                ephemeral: true, 
+                components: [ ]
             });
         }
     
@@ -275,9 +275,10 @@ client.on('interactionCreate', async interaction => {
         const equipes = JSON.parse(fs.readFileSync(equipesPath));
 
         if (equipes.length === 0) {
-            return interaction.reply({
-                content: '❌ Não há nenhuma equipe cadastrada para editar.',
-                ephemeral: true
+            return interaction.update({
+                content: 'Não há nenhuma equipe cadastrada para editar.',
+                ephemeral: true, 
+                components: [ ]
             });
         }
 
@@ -297,14 +298,12 @@ client.on('interactionCreate', async interaction => {
         const msg = interaction.message;
         const originalEmbed = msg.embeds[0];
     
-        // Protege tudo com try/catch
         try {
             if (!originalEmbed) {
-                // Se a interação ainda não foi respondida
                 if (!interaction.deferred && !interaction.replied) {
-                    return interaction.reply({ content: '❌ Nenhum embed encontrado.', ephemeral: true });
+                    return interaction.update({ content: 'Nenhum embed encontrado.', ephemeral: true, components: [ ] });
                 } else {
-                    console.warn('❌ Embed ausente e interação já respondida.');
+                    console.warn('Embed ausente e interação já respondida.');
                     return;
                 }
             }
@@ -330,10 +329,10 @@ client.on('interactionCreate', async interaction => {
             await msg.edit({ embeds: [embed], components: [row] });
     
         } catch (error) {
-            console.error('❌ Erro ao tentar resolver pendência:', error);
+            console.error('Erro ao tentar resolver pendência:', error);
     
             if (!interaction.replied && !interaction.deferred) {
-                await interaction.reply({ content: 'Erro ao processar a ação.', ephemeral: true });
+                await interaction.update({ content: 'Erro ao processar a ação.', ephemeral: true, components: [ ] });
             }
         }
     }

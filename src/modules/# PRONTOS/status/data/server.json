@@ -3,18 +3,18 @@
         "serverIp": "189.127.164.166",
         "serverPort": "30120",
         "serverConnect": "connect jogar.apestudio.dev",
-        "status": "manutenção",
-        "statusMessageId": null,
-        "statusChannelId": null,
+        "status": "online",
+        "statusMessageId": "1377650952319930422",
+        "statusChannelId": "1364840803897311292",
         "updateInterval": 1,
         "buttons": [
             {
-                "label": "Eu amo a Iris",
-                "url": "https://apestudio.dev/",
+                "label": "Mengazo",
+                "url": "https://mengazo.com",
                 "emoji": null
             },
             {
-                "label": "Eu amo o levi",
+                "label": "Ape",
                 "url": "https://apestudio.dev",
                 "emoji": null
             },

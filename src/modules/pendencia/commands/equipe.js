@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 module.exports = {
-    name: 'equipe',
+    name: 'pendencia',
     description: 'Menu de controle de equipes e pendências.',
     type: Discord.ApplicationCommandType.ChatInput,
 
